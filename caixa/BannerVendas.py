@@ -1,5 +1,5 @@
 import re
-
+from datetime import datetime
 import pyautogui
 from kivy.uix.label import Label
 from kivy.app import App
@@ -34,11 +34,14 @@ class BannerVendas(GridLayout):
         requisicao = meu_aplicativo.Requisicao_Patch(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Caixa/{meu_aplicativo.id_vendedor}', Dic_Caixa_Venda)
 
         desconto = meu_aplicativo.Desconto
+        data_atual = datetime.now()
+        data_atual = data_atual.strftime("%d/%m/%Y")
+
         if meu_aplicativo.CPF_Valido == True:
             tela = meu_aplicativo.root.ids["pagarvenda"]
             cpf = tela.ids["cpf_input"].text
             Dic_Venda_Fechada = {"Id": Dic_Venda["Id"], "Produtos": Dic_Venda["Produtos"], "Total": Dic_Venda["Total"], "Vendedor": Dic_Venda["Vendedor"],
-                                 "Caixa": meu_aplicativo.id_vendedor, "CPF": cpf, "Desconto": desconto}
+                                 "Caixa": meu_aplicativo.id_vendedor, "CPF": cpf, "Desconto": desconto, "Data": data_atual}
             if meu_aplicativo.Cupom_Valido == True:
                 Dic_Clientes = meu_aplicativo.Requisicao_Get('https://tcc2023-9212b-default-rtdb.firebaseio.com/Clientes')
                 cupom = tela.ids["cupom_input"].text
@@ -51,15 +54,12 @@ class BannerVendas(GridLayout):
         else:
             Dic_Venda_Fechada = {"Id": Dic_Venda["Id"], "Produtos": Dic_Venda["Produtos"], "Total": Dic_Venda["Total"],
                                  "Vendedor": Dic_Venda["Vendedor"],
-                                 "Caixa": meu_aplicativo.id_vendedor, "CPF": "Não Informado", "Desconto": desconto}
+                                 "Caixa": meu_aplicativo.id_vendedor, "CPF": "Não Informado", "Desconto": desconto, "Data": data_atual}
 
         requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Fechadas/', Dic_Venda_Fechada)
         requisicao = meu_aplicativo.Requisicao_Delete(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{meu_aplicativo.ID_Link}')
         pyautogui.alert("Compra Finalizada com Sucesso!\nAguarde a Impressão...")
         meu_aplicativo.bannervendas("Atualizar")
-
-
-
 
     def ExcluirVenda(self):
         meu_aplicativo = App.get_running_app()

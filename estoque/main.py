@@ -20,6 +20,7 @@ GUI = Builder.load_file("main.kv")
 class MainApp(App):
     id_vendedor = None
     nome_Estoque = None
+    Devolucao_Nome = None
 
     def build(self):
         self.title = "ESTOQUE"
@@ -93,16 +94,17 @@ class MainApp(App):
 
     def realizar_login(self, nome, senha):
         self.id_vendedor = MyFirebase.fazer_login(self, nome, senha)
+        meu_aplicativo = App.get_running_app()
         if self.id_vendedor != -1 and self.id_vendedor != -2:
+            pagina_login = meu_aplicativo.root.ids["login"]
+            pagina_login.ids["erro_login"].text = ''
             self.carregarInfos(self.id_vendedor)
             self.mudar_tela('homepage')
         elif self.id_vendedor == -2:
-            meu_aplicativo = App.get_running_app()
             pagina_login = meu_aplicativo.root.ids["login"]
             pagina_login.ids["erro_login"].text = 'Senha Incorreta'
             pagina_login.ids["erro_login"].color = (1, 0, 0, 1)
         else:
-            meu_aplicativo = App.get_running_app()
             pagina_login = meu_aplicativo.root.ids["login"]
             pagina_login.ids["erro_login"].text = 'Usuario Incorreto'
             pagina_login.ids["erro_login"].color = (1, 0, 0, 1)
@@ -110,6 +112,44 @@ class MainApp(App):
     def bannerprodutos(self, funcao):
         if funcao == 'atualizar':
             BannerProdutos()
+            self.mudar_tela("homepage")
+        elif funcao == 'devolucao':
+            BannerProdutos.Devolucao_Listar(self)
+            self.Devolucao_Nome = None
+            self.mudar_tela("devolucao")
+        elif funcao == 'devolver':
+            BannerProdutos.Devolver(self)
+
+    def Devolucao_Selecionar(self, nome, *args):
+        meu_aplicativo = App.get_running_app()
+        self.Devolucao_Nome = nome
+        # pintar de branco todos os outros caras
+        pagina_home = meu_aplicativo.root.ids["devolucao"]
+        lista_produtos = pagina_home.ids["lista_produtos"]
+        for item in list(lista_produtos.children):
+            item.color = (0, 0, 0, 1)
+            try:
+                texto = item.text
+                if nome in texto:
+                    item.color = (1, 1, 1, 1)
+            except:
+                pass
+
+    def ModificarQuantidade(self, fazer, pagina):
+
+        meu_aplicativo = App.get_running_app()
+
+        if fazer == 1:
+            novo_valor = meu_aplicativo.root.ids[pagina]
+            valor = int(novo_valor.ids["quantidade"].text)
+            valor = valor + 1
+            novo_valor.ids["quantidade"].text = f"{valor}"
+        elif fazer == -1:
+            novo_valor = meu_aplicativo.root.ids[pagina]
+            valor = int(novo_valor.ids["quantidade"].text)
+            if valor > 1:
+                valor = valor - 1
+            novo_valor.ids["quantidade"].text = f"{valor}"
 
 
 

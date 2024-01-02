@@ -5,3 +5,6 @@ class HomePage(Screen):
 
 class Login(Screen):
     pass
+
+class Devolucao(Screen):
+    pass

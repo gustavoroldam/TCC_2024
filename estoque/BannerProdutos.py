@@ -9,13 +9,49 @@ from TCC.vendedor.botoes import LabelButton
 
 class BannerProdutos(GridLayout):
 
-    def limpar_lista_produtos(self):
+    def Devolver(self):
+        pass
+
+    def limpar_lista_produtos(self, tela):
         meu_aplicativo = App.get_running_app()
 
-        pagina_carrinho = meu_aplicativo.root.ids["homepage"]
+        pagina_carrinho = meu_aplicativo.root.ids[tela]
         carrinho = pagina_carrinho.ids["lista_produtos"]
         for item in list(carrinho.children):
             carrinho.remove_widget(item)
+
+    def Devolucao_Listar(self):
+        meu_aplicativo = App.get_running_app()
+
+        try:
+            self.limpar_lista_produtos("devolucao")
+        except:
+            pass
+
+        requisicao_dic = meu_aplicativo.Requisicao_Get("https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos")
+
+        Tela_vendas = meu_aplicativo.root.ids["devolucao"]
+        vendas = Tela_vendas.ids["lista_produtos"]
+
+        for id in requisicao_dic:
+            if id != 'Proximo_Id':
+                Nome = requisicao_dic[id]["Nome"]
+                Quantidade = requisicao_dic[id]["Quantidade"]
+                Valor = float(requisicao_dic[id]["Valor"])
+
+                texto = f"Nome: {Nome} \nQuantidade: {Quantidade} \nValor: R$ {Valor: ,.2f}"
+
+                item = LabelButton(
+                    text=texto,
+                    halign='center',
+                    valign='middle',
+                    markup=True,
+                    size_hint=(1, 0.2),
+                    pos_hint={"right": 1, "top": 0.2},
+                    color=(0, 0, 0, 1),
+                    on_release=partial(meu_aplicativo.Devolucao_Selecionar, Nome)
+                )
+                vendas.add_widget(item)
 
     def __init__(self, **kwargs):
 
@@ -26,7 +62,7 @@ class BannerProdutos(GridLayout):
         super().__init__()
 
         try:
-            self.limpar_lista_produtos()
+            self.limpar_lista_produtos("homepage")
         except:
             pass
 
@@ -46,6 +82,8 @@ class BannerProdutos(GridLayout):
                 item = LabelButton(
                     text=texto,
                     markup=True,
+                    halign='center',
+                    valign='middle',
                     size_hint=(1, 0.2),
                     pos_hint={"right": 1, "top": 0.2},
                     color=(0, 0, 0, 1),

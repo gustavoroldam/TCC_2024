@@ -25,6 +25,50 @@
             pos_hint: {"right":0.35, "top":1}
             size_hint: 0.5, 0.10
 
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannerprodutos("devolucao")
+            text: "DEVOLUÇÃO DE PRODUTO"
+            pos_hint: {"right":0.965, "top":0.72}
+            size_hint: 0.3, 0.15
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannerprodutos("atualizar")
+            text: "ENTRADA DO PRODUTO"
+            pos_hint: {"right":0.965, "top":0.55}
+            size_hint: 0.3, 0.15
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannerprodutos("atualizar")
+            text: "PRODUTOS EM FALTA"
+            pos_hint: {"right":0.965, "top":0.38}
+            size_hint: 0.3, 0.15
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannerprodutos("atualizar")
+            text: "CADASTRAR PRODUTO"
+            pos_hint: {"right":0.965, "top":0.21}
+            size_hint: 0.3, 0.15
+
         ScrollView:
             pos_hint: {"right":0.5, "top":0.69}
             size_hint: 0.45, 0.9

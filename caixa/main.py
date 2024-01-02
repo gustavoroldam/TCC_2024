@@ -166,16 +166,17 @@ class MainApp(App):
 
     def realizar_login(self, nome, senha):
         self.id_vendedor = MyFirebase.fazer_login(self, nome, senha)
+        meu_aplicativo = App.get_running_app()
         if self.id_vendedor != -1 and self.id_vendedor != -2:
+            pagina_login = meu_aplicativo.root.ids["login"]
+            pagina_login.ids["erro_login"].text = ''
             self.carregarInfos(self.id_vendedor)
             self.mudar_tela('homepage')
         elif self.id_vendedor == -2:
-            meu_aplicativo = App.get_running_app()
             pagina_login = meu_aplicativo.root.ids["login"]
             pagina_login.ids["erro_login"].text = 'Senha Incorreta'
             pagina_login.ids["erro_login"].color = (1, 0, 0, 1)
         else:
-            meu_aplicativo = App.get_running_app()
             pagina_login = meu_aplicativo.root.ids["login"]
             pagina_login.ids["erro_login"].text = 'Usuario Incorreto'
             pagina_login.ids["erro_login"].color = (1, 0, 0, 1)
