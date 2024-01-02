@@ -1,0 +1,130 @@
+<PagarVenda>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo.png"
+                size: self.size
+                pos: self.pos
+
+        ImageButton:
+            source: "../imagens/sairB.png"
+            on_release: app.bannervendas("Atualizar", CPF = 123)
+            pos_hint: {"right":0.35, "top":1}
+            size_hint: 0.5, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannercliente("Validar_Cupom")
+            text: "VALIDAR"
+            pos_hint: {"right":0.69, "top":0.57}
+            size_hint: 0.25, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.mudar_tela("cadastrarcliente")
+            text: "CADASTRAR CLIENTE"
+            pos_hint: {"right":0.69, "top":0.28}
+            size_hint: 0.25, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannervendas("Pagar")
+            text: "FINALIZAR COMPRA"
+            pos_hint: {"right":0.69, "top":0.19}
+            size_hint: 0.25, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannervendas("ExcluirVenda")
+            text: "CANCELAR COMPRA"
+            pos_hint: {"right":0.69, "top":0.1}
+            size_hint: 0.25, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannercliente("Validar_CPF")
+            text: "VALIDAR"
+            pos_hint: {"right":0.94, "top":0.36}
+            size_hint: 0.1, 0.08
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannervendas("AdicionarProduto")
+            text: "+"
+            pos_hint: {"right":0.1, "top":0.8}
+            size_hint: 0.08, 0.08
+
+        Label:
+            pos_hint: {"right":0.85, "top":0.8}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"CÓDIGO: xxxxxx"
+            id: id_compra
+
+        Label:
+            pos_hint: {"right":0.9, "top":0.75}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            id: label_cupom
+            text:"CUPOM DE DESCONTO:"
+
+        Label:
+            pos_hint: {"right":0.93, "top":0.53}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"TOTAL DA COMPRA: R$xxx.xx"
+            id: total_compra
+
+        Label:
+            pos_hint: {"right":0.816, "top":0.47}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            id: label_cpf
+            text:"CPF:"
+
+        TextInput:
+            id: cpf_input
+            hint_text: "CPF"
+            pos_hint: {"right":0.826, "top": 0.35}
+            size_hint: 0.38, 0.06
+
+        TextInput:
+            id: cupom_input
+            hint_text: "INSIRA O CÓDIGO DO CUPOM AQUI"
+            pos_hint: {"right":0.83, "top": 0.63}
+            size_hint: 0.38, 0.06
+
+        ScrollView:
+            pos_hint: {"right":0.45, "top":0.73}
+            size_hint: 0.45, 0.9
+            GridLayout:
+                cols: 1
+                id: lista_produtos
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: "90dp"
+                row_force_default: True

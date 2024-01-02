@@ -1,0 +1,46 @@
+<Carrinho>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/celular/fundoOpcaoGrande.png"
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "Total: 0"
+            id: total_venda
+            pos_hint: {"right":0.75, "top":0.30}
+            size_hint: 0.5, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.mudar_tela("homepage")
+            text: "Voltar"
+            pos_hint: {"right":0.75, "top":0.22}
+            size_hint: 0.5, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.Venda("Finalizar")
+            text: "Finalizar Pedido"
+            pos_hint: {"right":0.75, "top":0.12}
+            size_hint: 0.5, 0.10
+
+        ScrollView:
+            pos_hint: {"right":0.95, "top":0.75}
+            size_hint: 0.9, 0.495
+            GridLayout:
+                cols: 1
+                id: lista_compra
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: "90dp"
+                row_force_default: True

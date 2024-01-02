@@ -1,0 +1,64 @@
+<VisualizarVenda>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/celular/fundoOpcaoGrande01.png"
+                size: self.size
+                pos: self.pos
+
+        Label:
+            pos_hint: {"right":0.85, "top":0.90}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"Venda: "
+            id: id_venda
+
+        Label:
+            text: "Total: 0"
+            id: total_venda
+            pos_hint: {"right":0.75, "top":0.40}
+            size_hint: 0.5, 0.15
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.Venda("Adicionar")
+            text: "Adicionar Produto"
+            pos_hint: {"right":0.75, "top":0.28}
+            size_hint: 0.5, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.Venda("Excluir")
+            text: "Excluir"
+            pos_hint: {"right":0.75, "top":0.20}
+            size_hint: 0.5, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.Venda("Carregar")
+            text: "Voltar"
+            pos_hint: {"right":0.75, "top":0.12}
+            size_hint: 0.5, 0.10
+
+        ScrollView:
+            pos_hint: {"right":0.95, "top":0.75}
+            size_hint: 0.9, 0.36
+            GridLayout:
+                cols: 1
+                id: lista_compra
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: "90dp"
+                row_force_default: True

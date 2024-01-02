@@ -1,0 +1,37 @@
+<HomePage>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo_opcao.png"
+                size: self.size
+                pos: self.pos
+
+        Label:
+            pos_hint: {"right":0.85, "top":0.83}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"Estoque Desconectado"
+            id: id_nome_vendedor
+
+        ImageButton:
+            source: "../imagens/atualizarB.png" if self.state == "normal" else "../imagens/atualizarBPrecionado.png"
+            on_release: app.bannerprodutos("atualizar")
+            pos_hint: {"right":0.35, "top":0.8}
+            size_hint: 0.5, 0.10
+
+        ImageButton:
+            source: "../imagens/sairB.png"
+            on_release: app.mudar_tela("login")
+            pos_hint: {"right":0.35, "top":1}
+            size_hint: 0.5, 0.10
+
+        ScrollView:
+            pos_hint: {"right":0.5, "top":0.69}
+            size_hint: 0.45, 0.9
+            GridLayout:
+                cols: 1
+                id: lista_produtos
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: "90dp"
+                row_force_default: True

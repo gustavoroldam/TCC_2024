@@ -1,0 +1,64 @@
+<CadastrarCliente>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo.png"
+                size: self.size
+                pos: self.pos
+
+        ImageButton:
+            source: "../imagens/sairB.png"
+            on_release: app.mudar_tela("pagarvenda")
+            pos_hint: {"right":0.35, "top":1}
+            size_hint: 0.5, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannercliente("Cadastrar")
+            id: cadastrar_bt
+            text: "CADASTRAR"
+            pos_hint: {"right":0.75, "top":0.15}
+            size_hint: 0.5, 0.15
+
+        Label:
+            color: 0,0,0,1
+            font_size: 35
+            text: "    CADASTRO DO CLIENTE"
+            markup: True
+            pos_hint: {"right": 0.9, "top": 0.75}
+            size_hint: 0.8, 0.2
+
+        Label:
+            pos_hint: {"right":0.48, "top":0.63}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"NOME:"
+        TextInput:
+            id: nome_input
+            hint_text: "Nome"
+            pos_hint: {"right": 0.9, "top": 0.5}
+            size_hint: 0.8, 0.08
+        Label:
+            pos_hint: {"right":0.48, "top":0.5}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"EMAIL:"
+        TextInput:
+            id: email_input
+            hint_text: "Email"
+            pos_hint: {"right": 0.9, "top": 0.375}
+            size_hint: 0.8, 0.08
+        Label:
+            pos_hint: {"right":0.47, "top":0.37}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"CPF:"
+        TextInput:
+            id: cpf_input
+            hint_text: "CPF"
+            pos_hint: {"right": 0.9, "top": 0.25}
+            size_hint: 0.8, 0.08

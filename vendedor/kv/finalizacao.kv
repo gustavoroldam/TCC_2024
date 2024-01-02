@@ -1,0 +1,28 @@
+<Finalizacao>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/celular/fundoOpcao.png"
+                size: self.size
+                pos: self.pos
+        Label:
+            color: 0,0,0,1
+            text: "COMPRA FINALIZADA COM \nSUCESSO DIRIJA-SE AO CAIXA\nE INFORME O SEGUINTE CÓDIGO:"
+            pos_hint: {"right":1, "top":0.85}
+            size_hint: 1, 0.5
+        Label:
+            color: 1,0.18,0.18,1
+            text: "010100101010"
+            pos_hint: {"right":1, "top":0.77}
+            size_hint: 1, 0.5
+            id: codigo_venda
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.mudar_tela("homepage")
+            text: "Voltar"
+            pos_hint: {"right":0.75, "top":0.18}
+            size_hint: 0.5, 0.15

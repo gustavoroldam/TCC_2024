@@ -1,0 +1,88 @@
+<EditarProduto>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo.png"
+                size: self.size
+                pos: self.pos
+
+        ImageButton:
+            source: "../imagens/sairB.png"
+            on_release: app.mudar_tela("pagarvenda")
+            pos_hint: {"right":0.35, "top":1}
+            size_hint: 0.5, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botaoCirculo.png" if self.state == "normal" else "../imagens/botaoCirculoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.ModificarQuantidade(1, "editarproduto")
+            text: "+"
+            font_size: '30sp'
+            pos_hint: {"right":0.6, "top":0.7}
+            size_hint: 0.12, 0.14
+
+
+        Label:
+            pos_hint: {"right":0.99, "top":0.73}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"1"
+            font_size: '30sp'
+            id: quantidade
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botaoCirculo.png" if self.state == "normal" else "../imagens/botaoCirculoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.ModificarQuantidade(-1, "editarproduto")
+            text: "-"
+            font_size: '30sp'
+            pos_hint: {"right":0.8, "top":0.7}
+            size_hint: 0.12, 0.14
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannervendas("SalvarAlteracao")
+            text: "SALVAR E SAIR"
+            id: salvar_sair
+            pos_hint: {"right":0.763, "top":0.57}
+            size_hint: 0.25, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.mudar_tela("pagarvenda")
+            text: "SAIR SEM SALVAR"
+            pos_hint: {"right":0.763, "top":0.47}
+            size_hint: 0.25, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannervendas("ExcluirProduto")
+            text: "EXCLUIR"
+            pos_hint: {"right":0.763, "top":0.37}
+            size_hint: 0.25, 0.10
+
+        Label:
+            pos_hint: {"right":0.45, "top":1}
+            size_hint: 0.45, 0.9
+            color: 0,0,0,1
+            id: Id_Produto
+            font_size: '25sp'
+            text: "NULL"

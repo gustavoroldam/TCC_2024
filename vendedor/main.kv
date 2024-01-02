@@ -1,0 +1,57 @@
+#:include kv/homepage.kv
+#:include kv/listarvendas.kv
+#:include kv/carrinho.kv
+#:include kv/finalizacao.kv
+#:include kv/login.kv
+#:include kv/mudarpedido.kv
+#:include kv/visualizarvenda.kv
+#:include kv/editarvendafeita.kv
+#:include kv/adicionarprodutodavenda.kv
+#:import utils kivy.utils
+
+FloatLayout:
+    canvas:
+        Rectangle:
+            source: "../imagens/celular/fundo.png"
+            size: self.size
+            pos: self.pos
+    ScreenManager:
+        pos_hint: {"right":1, "top":1}
+        size_hint: 1, 1
+        id: screen_manager
+
+        Login:
+            name: "login"
+            id: login
+
+        HomePage:
+            name: "homepage"
+            id: homepage
+
+        ListarVendas:
+            name: "listarvendas"
+            id: listarvendas
+
+        Carrinho:
+            name: "carrinho"
+            id: carrinho
+
+        MudarPedido:
+            name: "mudarpedido"
+            id: mudarpedido
+
+        Finalizacao:
+            name: "finalizacao"
+            id: finalizacao
+
+        VisualizarVenda:
+            name: "visualizarvenda"
+            id: visualizarvenda
+
+        EditarVendaFeita:
+            name: "editarvendafeita"
+            id: editarvendafeita
+
+        AdicionarProdutoDaVenda:
+            name: "adicionarprodutodavenda"
+            id: adicionarprodutodavenda

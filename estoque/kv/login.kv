@@ -1,0 +1,46 @@
+<Login>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo.png"
+                size: self.size
+                pos: self.pos
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.realizar_login(usuario_input.text, senha_input.text)
+            text: "FAZER LOGIN"
+            pos_hint: {"right":0.75, "top":0.18}
+            size_hint: 0.5, 0.15
+
+        Label:
+            color: 0,0,0,1
+            font_size: 35
+            text: "       LOGIN \n DO ESTOQUE"
+            markup: True
+            pos_hint: {"right": 0.9, "top": 0.75}
+            size_hint: 0.8, 0.2
+
+        TextInput:
+            id: usuario_input
+            hint_text: "Usuario"
+            pos_hint: {"right": 0.9, "top": 0.5}
+            size_hint: 0.8, 0.08
+        TextInput:
+            id: senha_input
+            password: True
+            hint_text: "Senha"
+            pos_hint: {"right": 0.9, "top": 0.35}
+            size_hint: 0.8, 0.08
+
+        Label:
+            id: erro_login
+            color: 1,0.18,0.18,1
+            text: ""
+            bold: True
+            pos_hint: {"right": 0.9, "top": 0.25}
+            size_hint: 0.8, 0.08
