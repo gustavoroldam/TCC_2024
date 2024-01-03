@@ -7,20 +7,23 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.switch import Switch
 from telas import *
 from botoes import *
 from myfirebase import MyFirebase
 from functools import partial
 import json
-from BannerProdutos import BannerProdutos
+from BannerProdutos import BannerProdutosDevolucao
+from BannerProdutoEntrada import  BannerProdutosEntrada
 
 GUI = Builder.load_file("main.kv")
-
 
 class MainApp(App):
     id_vendedor = None
     nome_Estoque = None
     Devolucao_Nome = None
+    Entrada_Nome = None
 
     def build(self):
         self.title = "ESTOQUE"
@@ -90,7 +93,7 @@ class MainApp(App):
         nome_perfil = self.root.ids["homepage"]
         nome_perfil.ids["id_nome_vendedor"].text = f"Estoque {requisicao_dic['Nome']}"
         # Carregar Lista Produtos
-        BannerProdutos()
+        BannerProdutosDevolucao()
 
     def realizar_login(self, nome, senha):
         self.id_vendedor = MyFirebase.fazer_login(self, nome, senha)
@@ -111,20 +114,42 @@ class MainApp(App):
 
     def bannerprodutos(self, funcao):
         if funcao == 'atualizar':
-            BannerProdutos()
+            BannerProdutosDevolucao()
             self.mudar_tela("homepage")
         elif funcao == 'devolucao':
-            BannerProdutos.Devolucao_Listar(self)
             self.Devolucao_Nome = None
+            tela = self.root.ids["devolucao"]
+            tela.ids["switch"].active = False
+            tela.ids["motivo_input"].text = ''
+            BannerProdutosDevolucao.Devolucao_Listar(self)
             self.mudar_tela("devolucao")
         elif funcao == 'devolver':
-            BannerProdutos.Devolver(self)
+            BannerProdutosDevolucao.Devolver(self)
+        elif funcao == 'entrada':
+            self.Entrada_Nome = None
+            BannerProdutosEntrada()
+            self.mudar_tela("entrada")
 
     def Devolucao_Selecionar(self, nome, *args):
         meu_aplicativo = App.get_running_app()
         self.Devolucao_Nome = nome
         # pintar de branco todos os outros caras
         pagina_home = meu_aplicativo.root.ids["devolucao"]
+        lista_produtos = pagina_home.ids["lista_produtos"]
+        for item in list(lista_produtos.children):
+            item.color = (0, 0, 0, 1)
+            try:
+                texto = item.text
+                if nome in texto:
+                    item.color = (1, 1, 1, 1)
+            except:
+                pass
+
+    def Entrada_Selecionar(self, nome, *args):
+        meu_aplicativo = App.get_running_app()
+        self.Entrada_Nome = nome
+        # pintar de branco todos os outros caras
+        pagina_home = meu_aplicativo.root.ids["entrada"]
         lista_produtos = pagina_home.ids["lista_produtos"]
         for item in list(lista_produtos.children):
             item.color = (0, 0, 0, 1)

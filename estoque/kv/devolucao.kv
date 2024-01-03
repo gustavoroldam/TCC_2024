@@ -1,0 +1,95 @@
+<Devolucao>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo_opcao.png"
+                size: self.size
+                pos: self.pos
+
+        Label:
+            pos_hint: {"right":1.12, "top":0.8}
+            size_hint: 0.7, 0.2
+            text:"MOTIVO DA DEVOLUÇÃO:"
+            id: id_nome_vendedor
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannerprodutos("devolver")
+            text: "GRAVAR"
+            pos_hint: {"right":0.965, "top":0.23}
+            size_hint: 0.3, 0.15
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannerprodutos("atualizar")
+            text: "VOLTAR"
+            pos_hint: {"right":0.89, "top":0.1}
+            size_hint: 0.15, 0.1
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botaoCirculo.png" if self.state == "normal" else "../imagens/botaoCirculoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.ModificarQuantidade(1, "devolucao")
+            font_size: '30sp'
+            text: "+"
+            pos_hint: {"right":0.77, "top":0.435}
+            size_hint: 0.12, 0.14
+
+
+        Label:
+            pos_hint: {"right":1.16, "top":0.465}
+            size_hint: 0.7, 0.2
+            text:"1"
+            id: quantidade
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botaoCirculo.png" if self.state == "normal" else "../imagens/botaoCirculoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.ModificarQuantidade(-1, "devolucao")
+            font_size: '30sp'
+            text: "-"
+            pos_hint: {"right":0.97, "top":0.435}
+            size_hint: 0.12, 0.14
+
+        TextInput:
+            id: motivo_input
+            hint_text: "TEXTO"
+            pos_hint: {"right":0.98, "top":0.65}
+            size_hint: 0.33, 0.22
+
+        Label:
+            pos_hint: {"right":1.1, "top":0.36}
+            size_hint: 0.7, 0.2
+            text:"REAPROVEITAR PRODUTO:"
+            id: id_nome_vendedor
+
+        Switch:
+            id: switch
+            pos_hint: {"right":0.98, "top":0.295}
+            size_hint: 0.1, 0.07
+            active: False
+
+        ScrollView:
+            pos_hint: {"right":0.5, "top":0.75}
+            size_hint: 0.45, 0.9
+            GridLayout:
+                cols: 1
+                id: lista_produtos
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: "90dp"
+                row_force_default: True

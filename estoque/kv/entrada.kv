@@ -1,0 +1,77 @@
+<Entrada>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo_opcao.png"
+                size: self.size
+                pos: self.pos
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannerprodutos("")
+            text: "GRAVAR"
+            pos_hint: {"right":0.965, "top":0.33}
+            size_hint: 0.3, 0.15
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannerprodutos("atualizar")
+            text: "VOLTAR"
+            pos_hint: {"right":0.89, "top":0.15}
+            size_hint: 0.15, 0.1
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botaoCirculo.png" if self.state == "normal" else "../imagens/botaoCirculoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.ModificarQuantidade(1, "entrada")
+            font_size: '30sp'
+            text: "+"
+            pos_hint: {"right":0.77, "top":0.535}
+            size_hint: 0.12, 0.14
+
+
+        Label:
+            pos_hint: {"right":1.16, "top":0.565}
+            size_hint: 0.7, 0.2
+            text:"1"
+            id: quantidade
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botaoCirculo.png" if self.state == "normal" else "../imagens/botaoCirculoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.ModificarQuantidade(-1, "entrada")
+            font_size: '30sp'
+            text: "-"
+            pos_hint: {"right":0.97, "top":0.535}
+            size_hint: 0.12, 0.14
+
+        Label:
+            pos_hint: {"right":1.155, "top":0.7}
+            size_hint: 0.7, 0.2
+            text:"QUANTIDADE A SER INSERIDA:"
+            id: id_nome_vendedor
+
+        ScrollView:
+            pos_hint: {"right":0.5, "top":0.75}
+            size_hint: 0.45, 0.9
+            GridLayout:
+                cols: 1
+                id: lista_produtos
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: "90dp"
+                row_force_default: True

@@ -6,11 +6,42 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from functools import partial
 from TCC.vendedor.botoes import LabelButton
+from pyautogui import alert
 
-class BannerProdutos(GridLayout):
+class BannerProdutosDevolucao(GridLayout):
 
     def Devolver(self):
-        pass
+        meu_aplicativo = App.get_running_app()
+
+        Nome = meu_aplicativo.Devolucao_Nome
+
+        if Nome != None:
+            tela = meu_aplicativo.root.ids["devolucao"]
+            Texto = tela.ids["motivo_input"].text
+
+            if Texto != '':
+                Quantidade = int(tela.ids["quantidade"].text)
+                Reutilizar = tela.ids["switch"].active
+
+                Dic_Devolucao = {"Produdo": Nome, "Motivo": Texto, "Quantidade": Quantidade, "Reutilizado": Reutilizar}
+
+                requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Devolucoes', Dic_Devolucao)
+
+                if Reutilizar == True:
+                    Dic_Produtos = meu_aplicativo.Requisicao_Get('https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos')
+                    for Produto in Dic_Produtos:
+                        if Produto != "Proximo_Id":
+                            if Dic_Produtos[Produto]["Nome"] == Nome:
+                                Antiga_Qtde = int(Dic_Produtos[Produto]["Quantidade"])
+                                Nova_Qtde = Antiga_Qtde + Quantidade
+                                Dic_Nova_Quantidade = {"Quantidade": Nova_Qtde}
+                                requisicao = meu_aplicativo.Requisicao_Patch(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos/{Produto}', Dic_Nova_Quantidade)
+                alert('Devolução Feita!')
+                meu_aplicativo.mudar_tela("homepage")
+            else:
+                alert('Insira um motivo para a DEVOLUÇÃO!')
+        else:
+            alert('Nenhum produto SELECIONADO!')
 
     def limpar_lista_produtos(self, tela):
         meu_aplicativo = App.get_running_app()
@@ -23,10 +54,7 @@ class BannerProdutos(GridLayout):
     def Devolucao_Listar(self):
         meu_aplicativo = App.get_running_app()
 
-        try:
-            self.limpar_lista_produtos("devolucao")
-        except:
-            pass
+        BannerProdutosDevolucao.limpar_lista_produtos(self, "devolucao")
 
         requisicao_dic = meu_aplicativo.Requisicao_Get("https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos")
 
@@ -49,7 +77,7 @@ class BannerProdutos(GridLayout):
                     size_hint=(1, 0.2),
                     pos_hint={"right": 1, "top": 0.2},
                     color=(0, 0, 0, 1),
-                    on_release=partial(meu_aplicativo.Devolucao_Selecionar, Nome)
+                    on_release=partial(meu_aplicativo.Entrada_Selecionar, Nome)
                 )
                 vendas.add_widget(item)
 

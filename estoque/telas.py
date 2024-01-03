@@ -8,3 +8,6 @@ class Login(Screen):
 
 class Devolucao(Screen):
     pass
+
+class Entrada(Screen):
+    pass
