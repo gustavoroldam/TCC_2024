@@ -11,3 +11,6 @@ class Devolucao(Screen):
 
 class Entrada(Screen):
     pass
+
+class Cadastrar(Screen):
+    pass

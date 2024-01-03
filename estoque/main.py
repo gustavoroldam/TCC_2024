@@ -15,7 +15,8 @@ from myfirebase import MyFirebase
 from functools import partial
 import json
 from BannerProdutos import BannerProdutosDevolucao
-from BannerProdutoEntrada import  BannerProdutosEntrada
+from BannerProdutoEntrada import BannerProdutosEntrada
+from BannerProdutoCadastro import BannerProdutoCadastro
 
 GUI = Builder.load_file("main.kv")
 
@@ -121,14 +122,28 @@ class MainApp(App):
             tela = self.root.ids["devolucao"]
             tela.ids["switch"].active = False
             tela.ids["motivo_input"].text = ''
+            tela.ids["quantidade"].text = '1'
             BannerProdutosDevolucao.Devolucao_Listar(self)
             self.mudar_tela("devolucao")
         elif funcao == 'devolver':
             BannerProdutosDevolucao.Devolver(self)
         elif funcao == 'entrada':
             self.Entrada_Nome = None
+            tela = self.root.ids["entrada"]
+            tela.ids["quantidade"].text = '1'
+            tela.ids["switch"].active = False
             BannerProdutosEntrada()
             self.mudar_tela("entrada")
+        elif funcao == 'entrada_gravar':
+            BannerProdutosEntrada.GravarEntrada(self, True)
+        elif funcao == 'sair_gravar':
+            BannerProdutosEntrada.GravarEntrada(self, False)
+        elif funcao == 'cadastrar':
+            tela = self.root.ids["cadastrar"]
+            tela.ids["nome_input"].text = ''
+            tela.ids["valor_input"].text = ''
+            tela.ids["qtde_input"].text = ''
+            self.mudar_tela("cadastrar")
 
     def Devolucao_Selecionar(self, nome, *args):
         meu_aplicativo = App.get_running_app()
@@ -176,6 +191,11 @@ class MainApp(App):
                 valor = valor - 1
             novo_valor.ids["quantidade"].text = f"{valor}"
 
-
+    def Switch_Lista_E_S(self):
+        tela = self.root.ids["entrada"]
+        if tela.ids["switch"].active:
+            BannerProdutosEntrada.Filtrar(self)
+        else:
+            BannerProdutosEntrada()
 
 MainApp().run()

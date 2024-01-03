@@ -12,9 +12,20 @@
                     source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
                     size: self.size
                     pos: self.pos
-            on_release: app.bannerprodutos("")
-            text: "GRAVAR"
-            pos_hint: {"right":0.965, "top":0.33}
+            on_release: app.bannerprodutos("entrada_gravar")
+            text: "GRAVAR ENTRADA"
+            pos_hint: {"right":0.965, "top":0.4}
+            size_hint: 0.3, 0.15
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.bannerprodutos("sair_gravar")
+            text: "GRAVAR SAÍDA"
+            pos_hint: {"right":0.965, "top":0.27}
             size_hint: 0.3, 0.15
 
         LabelButton:
@@ -25,7 +36,7 @@
                     pos: self.pos
             on_release: app.bannerprodutos("atualizar")
             text: "VOLTAR"
-            pos_hint: {"right":0.89, "top":0.15}
+            pos_hint: {"right":0.89, "top":0.12}
             size_hint: 0.15, 0.1
 
         LabelButton:
@@ -63,7 +74,18 @@
             pos_hint: {"right":1.155, "top":0.7}
             size_hint: 0.7, 0.2
             text:"QUANTIDADE A SER INSERIDA:"
-            id: id_nome_vendedor
+
+        Label:
+            pos_hint: {"right":1.12, "top":0.78}
+            size_hint: 0.7, 0.2
+            text:"ITENS EM FALTAS:"
+
+        Switch:
+            id: switch
+            pos_hint: {"right":0.98, "top":0.72}
+            size_hint: 0.1, 0.07
+            on_active: app.Switch_Lista_E_S()
+            active: False
 
         ScrollView:
             pos_hint: {"right":0.5, "top":0.75}

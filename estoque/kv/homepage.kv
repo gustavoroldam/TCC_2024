@@ -33,7 +33,7 @@
                     pos: self.pos
             on_release: app.bannerprodutos("devolucao")
             text: "DEVOLUÇÃO DE PRODUTO"
-            pos_hint: {"right":0.965, "top":0.72}
+            pos_hint: {"right":0.965, "top":0.65}
             size_hint: 0.3, 0.15
 
         LabelButton:
@@ -43,8 +43,8 @@
                     size: self.size
                     pos: self.pos
             on_release: app.bannerprodutos("entrada")
-            text: "ENTRADA DO PRODUTO"
-            pos_hint: {"right":0.965, "top":0.55}
+            text: "ENTRADA/SAÍDA DO PRODUTO"
+            pos_hint: {"right":0.965, "top":0.45}
             size_hint: 0.3, 0.15
 
         LabelButton:
@@ -53,20 +53,9 @@
                     source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
                     size: self.size
                     pos: self.pos
-            on_release: app.bannerprodutos("atualizar")
-            text: "PRODUTOS EM FALTA"
-            pos_hint: {"right":0.965, "top":0.38}
-            size_hint: 0.3, 0.15
-
-        LabelButton:
-            canvas.before:
-                Rectangle:
-                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
-                    size: self.size
-                    pos: self.pos
-            on_release: app.bannerprodutos("atualizar")
+            on_release: app.bannerprodutos("cadastrar")
             text: "CADASTRAR PRODUTO"
-            pos_hint: {"right":0.965, "top":0.21}
+            pos_hint: {"right":0.965, "top":0.25}
             size_hint: 0.3, 0.15
 
         ScrollView:
