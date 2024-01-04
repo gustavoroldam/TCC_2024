@@ -1,0 +1,27 @@
+#:include kv/login.kv
+#:include kv/homepage.kv
+#:include kv/gerenciarvendedores.kv
+#:import utils kivy.utils
+
+FloatLayout:
+    canvas:
+        Rectangle:
+            source: "../imagens/desktop/fundo.png"
+            size: self.size
+            pos: self.pos
+    ScreenManager:
+        pos_hint: {"right":1, "top":1}
+        size_hint: 1, 1
+        id: screen_manager
+
+        Login:
+            name: "login"
+            id: login
+
+        HomePage:
+            name: "homepage"
+            id: homepage
+
+        GerenciarVendedores:
+            name: "gerenciarvendedores"
+            id: gerenciarvendedores

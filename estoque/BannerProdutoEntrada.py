@@ -69,11 +69,11 @@ class BannerProdutosEntrada(GridLayout):
                         data_atual = data_atual.strftime("%d/%m/%Y")
                         if fazer == True:
                             Nova_Qtde = Antiga_Qtde + Quantidade
-                            Dic_Relatorio = {"Funcionario": meu_aplicativo.nome_Estoque, "Produto": Nome, "Quantidade": Quantidade, "Alteracao": "Entrada"}
+                            Dic_Relatorio = {"Funcionario": meu_aplicativo.nome_Estoque, "Produto": Nome, "Quantidade": Quantidade, "Alteracao": "Entrada", "Data": data_atual}
                             requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Movimentacao', Dic_Relatorio)
                         else:
                             Nova_Qtde = Antiga_Qtde - Quantidade
-                            Dic_Relatorio = {"Funcionario": meu_aplicativo.nome_Estoque, "Produto": Nome, "Quantidade": Quantidade, "Alteracao": "Saida"}
+                            Dic_Relatorio = {"Funcionario": meu_aplicativo.nome_Estoque, "Produto": Nome, "Quantidade": Quantidade, "Alteracao": "Saida", "Data": data_atual}
                             requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Movimentacao', Dic_Relatorio)
                         Dic_Nova_Quantidade = {"Quantidade": Nova_Qtde}
                         requisicao = meu_aplicativo.Requisicao_Patch(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos/{Produto}',Dic_Nova_Quantidade)
