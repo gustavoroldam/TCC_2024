@@ -21,7 +21,6 @@ from BannerProdutoCadastro import BannerProdutoCadastro
 GUI = Builder.load_file("main.kv")
 
 class MainApp(App):
-    id_vendedor = None
     nome_Estoque = None
     Devolucao_Nome = None
     Entrada_Nome = None
@@ -144,6 +143,8 @@ class MainApp(App):
             tela.ids["valor_input"].text = ''
             tela.ids["qtde_input"].text = ''
             self.mudar_tela("cadastrar")
+        elif funcao == 'gravar_cadastro':
+            BannerProdutoCadastro()
 
     def Devolucao_Selecionar(self, nome, *args):
         meu_aplicativo = App.get_running_app()

@@ -1,4 +1,5 @@
 import pyautogui
+from datetime import datetime
 from kivy.uix.label import Label
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
@@ -64,10 +65,16 @@ class BannerProdutosEntrada(GridLayout):
                 if Produto != "Proximo_Id":
                     if Dic_Produtos[Produto]["Nome"] == Nome:
                         Antiga_Qtde = int(Dic_Produtos[Produto]["Quantidade"])
+                        data_atual = datetime.now()
+                        data_atual = data_atual.strftime("%d/%m/%Y")
                         if fazer == True:
                             Nova_Qtde = Antiga_Qtde + Quantidade
+                            Dic_Relatorio = {"Funcionario": meu_aplicativo.nome_Estoque, "Produto": Nome, "Quantidade": Quantidade, "Alteracao": "Entrada"}
+                            requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Movimentacao', Dic_Relatorio)
                         else:
                             Nova_Qtde = Antiga_Qtde - Quantidade
+                            Dic_Relatorio = {"Funcionario": meu_aplicativo.nome_Estoque, "Produto": Nome, "Quantidade": Quantidade, "Alteracao": "Saida"}
+                            requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Movimentacao', Dic_Relatorio)
                         Dic_Nova_Quantidade = {"Quantidade": Nova_Qtde}
                         requisicao = meu_aplicativo.Requisicao_Patch(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos/{Produto}',Dic_Nova_Quantidade)
             alert('Alteração Feita!')
