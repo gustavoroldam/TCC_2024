@@ -1,0 +1,66 @@
+<Motivos>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo.png"
+                size: self.size
+                pos: self.pos
+
+        ImageButton:
+            source: "../imagens/sairB.png"
+            on_release: app.Opcoes("gestoque")
+            pos_hint: {"right":0.35, "top":1}
+            size_hint: 0.5, 0.10
+
+        Label:
+            pos_hint: {"right":1.22, "top":1.01}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"FILTRAR"
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botaoCirculo.png" if self.state == "normal" else "../imagens/botaoCirculoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            id: filtro
+            on_release: app.Opcoes("gmotivo_filtro")
+            text: "ESSE MÊS"
+            pos_hint: {"right":0.95, "top":0.92}
+            size_hint: 0.16, 0.18
+
+        Label:
+            pos_hint: {"right":0.52, "top":0.83}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"DATA"
+
+        Label:
+            pos_hint: {"right":0.74, "top":0.83}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"MOTIVO"
+
+        Label:
+            pos_hint: {"right":0.96, "top":0.83}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"QUANTIDADE"
+
+        Label:
+            pos_hint: {"right":1.18, "top":0.83}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"REUTILIZADO"
+
+        ScrollView:
+            pos_hint: {"right":0.95, "top":0.7}
+            size_hint: 0.9, 0.7
+            GridLayout:
+                cols: 4
+                id: lista_vendas
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: "90dp"
+                row_force_default: True

@@ -16,6 +16,7 @@ from functools import partial
 import json
 from BannerVendedores import BannerVendedores
 from BannerVendas import BannerVendas
+from BannerEstoque import BannerEstoque
 
 GUI = Builder.load_file("main.kv")
 
@@ -23,6 +24,7 @@ class MainApp(App):
     nome_Estoque = None
     Devolucao_Nome = None
     Entrada_Nome = None
+    Nome_Motivo = None
 
     def build(self):
         self.title = "GERENCIA"
@@ -126,6 +128,21 @@ class MainApp(App):
             self.mudar_tela("gerenciarvendas")
         elif funcao == "gvendas_filtro":
             BannerVendas.Filtrar(self)
+        elif funcao == "gestoque":
+            BannerEstoque()
+            tela = self.root.ids["gerenciarestoque"]
+            tela.ids["filtro"].text = "ESSE MÊS"
+            self.mudar_tela("gerenciarestoque")
+        elif funcao == "gestoque_filtro":
+            BannerEstoque.Filtrar(self)
+        elif funcao == "gmotivo_filtro":
+            BannerEstoque.Filtrar_Motivo(self)
+
+
+    def Motivo(self, nome, extra, *args):
+        if nome != "Atualizar":
+            self.Nome_Motivo = nome
+            BannerEstoque.Listar_Motivos(self)
 
     # def Devolucao_Selecionar(self, nome, *args):
     #     meu_aplicativo = App.get_running_app()

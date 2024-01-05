@@ -11,3 +11,9 @@ class GerenciarVendedores(Screen):
 
 class GerenciarVendas(Screen):
     pass
+
+class GerenciarEstoque(Screen):
+    pass
+
+class Motivos(Screen):
+    pass

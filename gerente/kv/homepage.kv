@@ -47,18 +47,7 @@
                     source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
                     size: self.size
                     pos: self.pos
-            on_release: app.Opcoes("cadastrar")
-            text: "ANALISAR ESTOQUE"
-            pos_hint: {"right":0.9, "top":0.65}
-            size_hint: 0.3, 0.15
-
-        LabelButton:
-            canvas.before:
-                Rectangle:
-                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
-                    size: self.size
-                    pos: self.pos
-            on_release: app.Opcoes("cadastrar")
+            on_release: app.Opcoes("gestoque")
             text: "ANALISAR ESTOQUE"
             pos_hint: {"right":0.9, "top":0.65}
             size_hint: 0.3, 0.15

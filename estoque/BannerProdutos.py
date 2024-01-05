@@ -27,7 +27,7 @@ class BannerProdutosDevolucao(GridLayout):
                 data_atual = datetime.now()
                 data_atual = data_atual.strftime("%d/%m/%Y")
 
-                Dic_Devolucao = {"Produdo": Nome, "Motivo": Texto, "Quantidade": Quantidade, "Reutilizado": Reutilizar, "Data": data_atual}
+                Dic_Devolucao = {"Produto": Nome, "Motivo": Texto, "Quantidade": Quantidade, "Reutilizado": Reutilizar, "Data": data_atual}
 
                 requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Devolucoes', Dic_Devolucao)
 
