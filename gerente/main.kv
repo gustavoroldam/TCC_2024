@@ -1,6 +1,7 @@
 #:include kv/login.kv
 #:include kv/homepage.kv
 #:include kv/gerenciarvendedores.kv
+#:include kv/gerenciarvendas.kv
 #:import utils kivy.utils
 
 FloatLayout:
@@ -25,3 +26,7 @@ FloatLayout:
         GerenciarVendedores:
             name: "gerenciarvendedores"
             id: gerenciarvendedores
+
+        GerenciarVendas:
+            name: "gerenciarvendas"
+            id: gerenciarvendas

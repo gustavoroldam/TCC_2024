@@ -1,8 +1,8 @@
-<GerenciarVendedores>:
+<GerenciarVendas>:
     FloatLayout:
         canvas:
             Rectangle:
-                source: "../imagens/desktop/fundo_opcao_abaixo.png"
+                source: "../imagens/desktop/fundo.png"
                 size: self.size
                 pos: self.pos
 
@@ -25,21 +25,10 @@
                     size: self.size
                     pos: self.pos
             id: filtro
-            on_release: app.Opcoes("gvendedor_filtro")
+            on_release: app.Opcoes("gvendas_filtro")
             text: "ESSE MÊS"
             pos_hint: {"right":0.95, "top":0.92}
             size_hint: 0.16, 0.18
-
-        LabelButton:
-            canvas.before:
-                Rectangle:
-                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
-                    size: self.size
-                    pos: self.pos
-            on_release: app.Opcoes("comissao")
-            text: "GRAVAR"
-            pos_hint: {"right":0.65, "top":0.15}
-            size_hint: 0.3, 0.15
 
         Label:
             pos_hint: {"right":0.55, "top":0.83}
@@ -51,30 +40,20 @@
             pos_hint: {"right":0.85, "top":0.83}
             size_hint: 0.7, 0.2
             color: 0,0,0,1
-            text:"TOTAL DE VENDAS (R$)"
+            text:"QUANTIDADE VENDIDA"
 
         Label:
             pos_hint: {"right":1.15, "top":0.83}
             size_hint: 0.7, 0.2
             color: 0,0,0,1
-            text:"COMISSÃO (R$)"
-
-        Label:
-            pos_hint: {"right":0.55, "top":0.3}
-            size_hint: 0.7, 0.2
-            text:"COMISSÃO (%):"
-
-        TextInput:
-            id: comissao_input
-            pos_hint: {"right": 0.78, "top": 0.22}
-            size_hint: 0.5, 0.05
+            text:"TOTAL (R$)"
 
         ScrollView:
             pos_hint: {"right":0.95, "top":0.7}
-            size_hint: 0.9, 0.452
+            size_hint: 0.9, 0.7
             GridLayout:
                 cols: 3
-                id: lista_vendas_vendedores
+                id: lista_vendas
                 size_hint_y: None
                 height: self.minimum_height
                 row_default_height: "90dp"

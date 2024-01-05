@@ -64,6 +64,7 @@ class BannerProdutosEntrada(GridLayout):
             for Produto in Dic_Produtos:
                 if Produto != "Proximo_Id":
                     if Dic_Produtos[Produto]["Nome"] == Nome:
+                        Liberado = True
                         Antiga_Qtde = int(Dic_Produtos[Produto]["Quantidade"])
                         data_atual = datetime.now()
                         data_atual = data_atual.strftime("%d/%m/%Y")
@@ -73,12 +74,19 @@ class BannerProdutosEntrada(GridLayout):
                             requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Movimentacao', Dic_Relatorio)
                         else:
                             Nova_Qtde = Antiga_Qtde - Quantidade
-                            Dic_Relatorio = {"Funcionario": meu_aplicativo.nome_Estoque, "Produto": Nome, "Quantidade": Quantidade, "Alteracao": "Saida", "Data": data_atual}
-                            requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Movimentacao', Dic_Relatorio)
+                            if Nova_Qtde < 0:
+                                Liberado = False
+                            if Liberado == True:
+                                Dic_Relatorio = {"Funcionario": meu_aplicativo.nome_Estoque, "Produto": Nome, "Quantidade": Quantidade, "Alteracao": "Saida", "Data": data_atual}
+                                requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Movimentacao', Dic_Relatorio)
                         Dic_Nova_Quantidade = {"Quantidade": Nova_Qtde}
-                        requisicao = meu_aplicativo.Requisicao_Patch(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos/{Produto}',Dic_Nova_Quantidade)
-            alert('Alteração Feita!')
-            meu_aplicativo.mudar_tela("homepage")
+                        if Liberado == True:
+                            requisicao = meu_aplicativo.Requisicao_Patch(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos/{Produto}',Dic_Nova_Quantidade)
+            if Liberado == True:
+                alert('Alteração Feita!')
+                meu_aplicativo.mudar_tela("homepage")
+            else:
+                alert('Estoque em FALTA!')
         else:
             alert('Selecione um PRODUTO primeiro!')
 

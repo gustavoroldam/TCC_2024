@@ -1,4 +1,5 @@
 import pyautogui
+from datetime import datetime
 from kivy.uix.label import Label
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
@@ -23,7 +24,10 @@ class BannerProdutosDevolucao(GridLayout):
                 Quantidade = int(tela.ids["quantidade"].text)
                 Reutilizar = tela.ids["switch"].active
 
-                Dic_Devolucao = {"Produdo": Nome, "Motivo": Texto, "Quantidade": Quantidade, "Reutilizado": Reutilizar}
+                data_atual = datetime.now()
+                data_atual = data_atual.strftime("%d/%m/%Y")
+
+                Dic_Devolucao = {"Produdo": Nome, "Motivo": Texto, "Quantidade": Quantidade, "Reutilizado": Reutilizar, "Data": data_atual}
 
                 requisicao = meu_aplicativo.Requisicao_Post('https://tcc2023-9212b-default-rtdb.firebaseio.com/Devolucoes', Dic_Devolucao)
 
@@ -77,7 +81,7 @@ class BannerProdutosDevolucao(GridLayout):
                     size_hint=(1, 0.2),
                     pos_hint={"right": 1, "top": 0.2},
                     color=(0, 0, 0, 1),
-                    on_release=partial(meu_aplicativo.Entrada_Selecionar, Nome)
+                    on_release=partial(meu_aplicativo.Devolucao_Selecionar, Nome)
                 )
                 vendas.add_widget(item)
 

@@ -15,6 +15,7 @@ from myfirebase import MyFirebase
 from functools import partial
 import json
 from BannerVendedores import BannerVendedores
+from BannerVendas import BannerVendas
 
 GUI = Builder.load_file("main.kv")
 
@@ -110,10 +111,21 @@ class MainApp(App):
 
     def Opcoes(self, funcao):
         if funcao == "gvendedores":
+            tela = self.root.ids["gerenciarvendedores"]
+            tela.ids["filtro"].text = "ESSE MÊS"
             BannerVendedores()
             self.mudar_tela("gerenciarvendedores")
         elif funcao == "comissao":
             BannerVendedores.GravarComissao(self)
+        elif funcao == "gvendedor_filtro":
+            BannerVendedores.Filtrar(self)
+        elif funcao == "gvendas":
+            BannerVendas()
+            tela = self.root.ids["gerenciarvendas"]
+            tela.ids["filtro"].text = "ESSE MÊS"
+            self.mudar_tela("gerenciarvendas")
+        elif funcao == "gvendas_filtro":
+            BannerVendas.Filtrar(self)
 
     # def Devolucao_Selecionar(self, nome, *args):
     #     meu_aplicativo = App.get_running_app()

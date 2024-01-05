@@ -172,6 +172,7 @@ class MainApp(App):
             try:
                 texto = item.text
                 if nome in texto:
+                    print("Achei")
                     item.color = (1, 1, 1, 1)
             except:
                 pass

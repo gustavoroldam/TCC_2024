@@ -8,3 +8,6 @@ class Login(Screen):
 
 class GerenciarVendedores(Screen):
     pass
+
+class GerenciarVendas(Screen):
+    pass
