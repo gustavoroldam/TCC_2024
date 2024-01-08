@@ -1,0 +1,98 @@
+<AdicionarFuncionario>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo.png"
+                size: self.size
+                pos: self.pos
+
+        ImageButton:
+            source: "../imagens/sairB.png"
+            on_release: app.Opcoes("gfuncionarios")
+            pos_hint: {"right":0.35, "top":1}
+            size_hint: 0.5, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.Opcoes("add_func_add")
+            text: "GRAVAR"
+            pos_hint: {"right":0.75, "top":0.15}
+            size_hint: 0.5, 0.15
+
+        LabelButton:
+            on_release: app.Selecao_Funcionario("bt-vendedor")
+            text: "VENDEDOR"
+            color: 0,0,0,1
+            id: bt-vendedor
+            pos_hint: {"right":0.3, "top":0.75}
+            size_hint: 0.2, 0.1
+
+        LabelButton:
+            on_release: app.Selecao_Funcionario("bt-caixa")
+            text: "CAIXA"
+            color: 0,0,0,1
+            id: bt-caixa
+            pos_hint: {"right":0.5, "top":0.75}
+            size_hint: 0.2, 0.1
+
+        LabelButton:
+            on_release: app.Selecao_Funcionario("bt-estoque")
+            text: "ESTOQUE"
+            color: 0,0,0,1
+            id: bt-estoque
+            pos_hint: {"right":0.7, "top":0.75}
+            size_hint: 0.2, 0.1
+
+        LabelButton:
+            on_release: app.Selecao_Funcionario("bt-adm")
+            text: "ADMINISTRADOR"
+            color: 0,0,0,1
+            id: bt-adm
+            pos_hint: {"right":0.9, "top":0.75}
+            size_hint: 0.2, 0.1
+
+        Label:
+            pos_hint: {"right":0.53, "top":0.73}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"NOME COMPLETO:"
+        TextInput:
+            id: nome_input
+            hint_text: "nome"
+            pos_hint: {"right": 0.9, "top": 0.6}
+            size_hint: 0.8, 0.08
+        Label:
+            pos_hint: {"right":0.48, "top":0.6}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"LOGIN:"
+        TextInput:
+            id: login_input
+            hint_text: "login"
+            pos_hint: {"right": 0.9, "top": 0.475}
+            size_hint: 0.8, 0.08
+        Label:
+            pos_hint: {"right":0.485, "top":0.47}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"SENHA:"
+        TextInput:
+            id: senha_input
+            hint_text: "senha"
+            password: True
+            pos_hint: {"right": 0.9, "top": 0.35}
+            size_hint: 0.8, 0.08
+        Label:
+            pos_hint: {"right":0.47, "top":0.34}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"CPF:"
+        TextInput:
+            id: cpf_input
+            hint_text: "cpf"
+            pos_hint: {"right": 0.9, "top": 0.225}
+            size_hint: 0.8, 0.08

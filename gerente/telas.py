@@ -17,3 +17,9 @@ class GerenciarEstoque(Screen):
 
 class Motivos(Screen):
     pass
+
+class ListarFuncionarios(Screen):
+    pass
+
+class AdicionarFuncionario(Screen):
+    pass

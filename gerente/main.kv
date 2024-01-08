@@ -4,6 +4,8 @@
 #:include kv/gerenciarvendas.kv
 #:include kv/gerenciarestoque.kv
 #:include kv/motivos.kv
+#:include kv/listarfuncionarios.kv
+#:include kv/adicionarfuncionario.kv
 #:import utils kivy.utils
 
 FloatLayout:
@@ -40,3 +42,11 @@ FloatLayout:
         Motivos:
             name: "motivos"
             id: motivos
+
+        ListarFuncionarios:
+            name: "listarfuncionarios"
+            id: listarfuncionarios
+
+        AdicionarFuncionario:
+            name: "adicionarfuncionario"
+            id: adicionarfuncionario

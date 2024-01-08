@@ -17,6 +17,7 @@ import json
 from BannerVendedores import BannerVendedores
 from BannerVendas import BannerVendas
 from BannerEstoque import BannerEstoque
+from BannerFuncionario import BannerFuncionario
 
 GUI = Builder.load_file("main.kv")
 
@@ -25,6 +26,7 @@ class MainApp(App):
     Devolucao_Nome = None
     Entrada_Nome = None
     Nome_Motivo = None
+    Cargo_Funcionario = None
 
     def build(self):
         self.title = "GERENCIA"
@@ -137,12 +139,49 @@ class MainApp(App):
             BannerEstoque.Filtrar(self)
         elif funcao == "gmotivo_filtro":
             BannerEstoque.Filtrar_Motivo(self)
+        elif funcao == "gfuncionarios":
+            BannerFuncionario()
+            self.mudar_tela("listarfuncionarios")
+        elif funcao == "add_func":
+            self.Cargo_Funcionario = None
+            self.Selecao_Funcionario("")
+            tela = self.root.ids["adicionarfuncionario"]
+            tela.ids["nome_input"].text = ''
+            tela.ids["login_input"].text = ''
+            tela.ids["senha_input"].text = ''
+            tela.ids["cpf_input"].text = ''
+            self.mudar_tela("adicionarfuncionario")
+        elif funcao == "add_func_add":
+            BannerFuncionario.add_conta(self)
 
 
     def Motivo(self, nome, extra, *args):
         if nome != "Atualizar":
             self.Nome_Motivo = nome
             BannerEstoque.Listar_Motivos(self)
+
+    def Selecao_Funcionario(self, botao):
+        tela = self.root.ids["adicionarfuncionario"]
+        if botao != "bt-vendedor":
+            tela.ids["bt-vendedor"].color = 0,0,0,1
+        else:
+            tela.ids["bt-vendedor"].color = 1,0,0,1
+            self.Cargo_Funcionario = "Vendedor"
+        if botao != "bt-adm":
+            tela.ids["bt-adm"].color = 0,0,0,1
+        else:
+            tela.ids["bt-adm"].color = 1,0,0,1
+            self.Cargo_Funcionario = "ADM"
+        if botao != "bt-estoque":
+            tela.ids["bt-estoque"].color = 0,0,0,1
+        else:
+            tela.ids["bt-estoque"].color = 1,0,0,1
+            self.Cargo_Funcionario = "Estoque"
+        if botao != "bt-caixa":
+            tela.ids["bt-caixa"].color = 0,0,0,1
+        else:
+            tela.ids["bt-caixa"].color = 1,0,0,1
+            self.Cargo_Funcionario = "Caixa"
 
     # def Devolucao_Selecionar(self, nome, *args):
     #     meu_aplicativo = App.get_running_app()

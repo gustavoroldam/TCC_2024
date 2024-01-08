@@ -1,6 +1,7 @@
 import json
 from kivy.app import App
 import requests
+from pyautogui import alert
 
 class MyFirebase():
     API_Chave = "AIzaSyCQdX6Pn9DTIPWBOv2_eDB4lxbP1aEUJIg"
