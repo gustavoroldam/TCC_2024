@@ -11,6 +11,46 @@ import re
 
 class BannerFuncionario(GridLayout):
 
+    def editar(self, id, cargo):
+        meu_aplicativo = App.get_running_app()
+
+        tela = meu_aplicativo.root.ids["editarfuncionario"]
+
+        login = tela.ids["login_input"].text
+        senha = tela.ids["senha_input"].text
+
+        Dic_Mudanca = {"Nome": f"{login}", "Senha": f"{senha}"}
+
+        if cargo != "ADM":
+            requisicao = meu_aplicativo.Requisicao_Patch(
+                f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/{cargo}/{id}', Dic_Mudanca)
+        else:
+            requisicao = meu_aplicativo.Requisicao_Patch(
+                f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Usuarios/{id}', Dic_Mudanca)
+
+        alert('Alteração feita!')
+        meu_aplicativo.Opcoes("gfuncionarios")
+
+    def ler_funcionario(self, cargo, id, *args):
+        meu_aplicativo = App.get_running_app()
+
+        meu_aplicativo.Link_Funcionario = id
+        meu_aplicativo.Cargo_Funcionario_Editar = cargo
+
+        tela = meu_aplicativo.root.ids["editarfuncionario"]
+
+        if cargo != "ADM":
+            Dic_Funcionario = meu_aplicativo.Requisicao_Get(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/{cargo}/{id}')
+        else:
+            Dic_Funcionario = meu_aplicativo.Requisicao_Get(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Usuarios/{id}')
+
+        tela.ids["nome_completo"].text = f"{Dic_Funcionario['Usuario']}"
+        tela.ids["login_input"].text = f"{Dic_Funcionario['Nome']}"
+        tela.ids["senha_input"].text = f"{Dic_Funcionario['Senha']}"
+        tela.ids["cpf"].text = f"{Dic_Funcionario['CPF']}"
+
+        meu_aplicativo.mudar_tela("editarfuncionario")
+
     def add_conta(self):
         meu_aplicativo = App.get_running_app()
 
@@ -152,6 +192,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Caixa", id)
             )
             vendas.add_widget(item)
 
@@ -167,6 +208,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Caixa", id)
             )
             vendas.add_widget(item)
 
@@ -182,6 +224,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Caixa", id)
             )
             vendas.add_widget(item)
 
@@ -197,6 +240,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Caixa", id)
             )
             vendas.add_widget(item)
 
@@ -210,6 +254,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Caixa", id)
             )
             vendas.add_widget(item)
 
@@ -226,6 +271,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Vendedor", id)
             )
             vendas.add_widget(item)
 
@@ -241,6 +287,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Vendedor", id)
             )
             vendas.add_widget(item)
 
@@ -256,6 +303,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Vendedor", id)
             )
             vendas.add_widget(item)
 
@@ -271,6 +319,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Vendedor", id)
             )
             vendas.add_widget(item)
 
@@ -284,6 +333,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Vendedor", id)
             )
             vendas.add_widget(item)
 
@@ -300,6 +350,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Estoque", id)
             )
             vendas.add_widget(item)
 
@@ -315,6 +366,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Estoque", id)
             )
             vendas.add_widget(item)
 
@@ -330,6 +382,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Estoque", id)
             )
             vendas.add_widget(item)
 
@@ -345,6 +398,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Estoque", id)
             )
             vendas.add_widget(item)
 
@@ -358,6 +412,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "Estoque", id)
             )
             vendas.add_widget(item)
 
@@ -374,6 +429,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "ADM", id)
             )
             vendas.add_widget(item)
 
@@ -389,6 +445,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "ADM", id)
             )
             vendas.add_widget(item)
 
@@ -404,6 +461,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "ADM", id)
             )
             vendas.add_widget(item)
 
@@ -419,6 +477,7 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "ADM", id)
             )
             vendas.add_widget(item)
 
@@ -432,5 +491,6 @@ class BannerFuncionario(GridLayout):
                 size_hint=(1, 0.2),
                 pos_hint={"right": 1, "top": 0.2},
                 color=(0, 0, 0, 1),
+                on_release=partial(self.ler_funcionario, "ADM", id)
             )
             vendas.add_widget(item)

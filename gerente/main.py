@@ -18,6 +18,7 @@ from BannerVendedores import BannerVendedores
 from BannerVendas import BannerVendas
 from BannerEstoque import BannerEstoque
 from BannerFuncionario import BannerFuncionario
+from BannerProdutos import BannerProdutos
 
 GUI = Builder.load_file("main.kv")
 
@@ -27,6 +28,8 @@ class MainApp(App):
     Entrada_Nome = None
     Nome_Motivo = None
     Cargo_Funcionario = None
+    Link_Funcionario = None
+    Cargo_Funcionario_Editar = None
 
     def build(self):
         self.title = "GERENCIA"
@@ -153,6 +156,20 @@ class MainApp(App):
             self.mudar_tela("adicionarfuncionario")
         elif funcao == "add_func_add":
             BannerFuncionario.add_conta(self)
+        elif funcao == "edit_func":
+            BannerFuncionario.editar(self, self.Link_Funcionario, self.Cargo_Funcionario_Editar)
+        elif funcao == "gprodutos":
+            BannerProdutos()
+            self.mudar_tela("listarprodutos")
+        elif funcao == "add_prod":
+            tela = self.root.ids["adicionarproduto"]
+            tela.ids["nome_input"].text = ''
+            tela.ids["qtde_input"].text = ''
+            tela.ids["valor_input"].text = ''
+            self.mudar_tela("adicionarproduto")
+        elif funcao == "add_prod_add":
+            BannerProdutos.add_produto(self)
+
 
 
     def Motivo(self, nome, extra, *args):

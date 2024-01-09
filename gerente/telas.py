@@ -23,3 +23,12 @@ class ListarFuncionarios(Screen):
 
 class AdicionarFuncionario(Screen):
     pass
+
+class EditarFuncionario(Screen):
+    pass
+
+class ListarProdutos(Screen):
+    pass
+
+class AdicionarProduto(Screen):
+    pass
