@@ -32,3 +32,9 @@ class ListarProdutos(Screen):
 
 class AdicionarProduto(Screen):
     pass
+
+class EditarProduto(Screen):
+    pass
+
+class Email(Screen):
+    pass

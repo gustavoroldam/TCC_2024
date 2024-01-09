@@ -11,45 +11,54 @@ import re
 
 class BannerProdutos(GridLayout):
 
-    def editar(self, id, cargo):
+    def editar(self, id):
+        meu_aplicativo = App.get_running_app()
+        tela = meu_aplicativo.root.ids["editarproduto"]
+
+        nome = tela.ids["nome_input"].text
+        if nome != "":
+            qtde = tela.ids["qtde_input"].text
+            try:
+                qtde = int(qtde)
+            except:
+                qtde = ""
+            if qtde != "":
+                valor = tela.ids["valor_input"].text
+                try:
+                    valor = float(valor)
+                except:
+                    try:
+                        valor = valor.replace(',', '.')
+                        valor = float(valor)
+                    except:
+                        valor = ''
+                if valor != "":
+                    Dic_Cadastro = {"Nome": nome, "Quantidade": qtde, "Valor": valor}
+                    requisicao = meu_aplicativo.Requisicao_Patch(
+                        f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos/{id}', Dic_Cadastro)
+                    alert('Produto gravado com SUCESSO!')
+                    meu_aplicativo.Opcoes("gprodutos")
+                else:
+                    alert("Campo VALOR vazio ou incorreto!")
+            else:
+                alert("Campo QUANTIDADE vazio ou incorreto!")
+        else:
+            alert("Campo NOME vazio!")
+
+    def ler_produto(self, id, *args):
         meu_aplicativo = App.get_running_app()
 
-        tela = meu_aplicativo.root.ids["listarprodutos"]
+        meu_aplicativo.Link_Produto = id
 
-        login = tela.ids["login_input"].text
-        senha = tela.ids["senha_input"].text
+        tela = meu_aplicativo.root.ids["editarproduto"]
 
-        Dic_Mudanca = {"Nome": f"{login}", "Senha": f"{senha}"}
+        Dic_Produto = meu_aplicativo.Requisicao_Get(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos/{id}')
 
-        if cargo != "ADM":
-            requisicao = meu_aplicativo.Requisicao_Patch(
-                f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/{cargo}/{id}', Dic_Mudanca)
-        else:
-            requisicao = meu_aplicativo.Requisicao_Patch(
-                f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Usuarios/{id}', Dic_Mudanca)
+        tela.ids["nome_input"].text = f"{Dic_Produto['Nome']}"
+        tela.ids["qtde_input"].text = f"{Dic_Produto['Quantidade']}"
+        tela.ids["valor_input"].text = f"{Dic_Produto['Valor']}"
 
-        alert('Alteração feita!')
-        meu_aplicativo.Opcoes("gfuncionarios")
-
-    def ler_produto(self, cargo, id, *args):
-        meu_aplicativo = App.get_running_app()
-
-        meu_aplicativo.Link_Funcionario = id
-        meu_aplicativo.Cargo_Funcionario_Editar = cargo
-
-        tela = meu_aplicativo.root.ids["listarprodutos"]
-
-        if cargo != "ADM":
-            Dic_Funcionario = meu_aplicativo.Requisicao_Get(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/{cargo}/{id}')
-        else:
-            Dic_Funcionario = meu_aplicativo.Requisicao_Get(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Usuarios/{id}')
-
-        tela.ids["nome_completo"].text = f"{Dic_Funcionario['Usuario']}"
-        tela.ids["login_input"].text = f"{Dic_Funcionario['Nome']}"
-        tela.ids["senha_input"].text = f"{Dic_Funcionario['Senha']}"
-        tela.ids["cpf"].text = f"{Dic_Funcionario['CPF']}"
-
-        meu_aplicativo.mudar_tela("editarfuncionario")
+        meu_aplicativo.mudar_tela("editarproduto")
 
     def add_produto(self):
         meu_aplicativo = App.get_running_app()
@@ -129,7 +138,7 @@ class BannerProdutos(GridLayout):
                     size_hint=(1, 0.2),
                     pos_hint={"right": 1, "top": 0.2},
                     color=(0, 0, 0, 1),
-                    on_release=partial(self.ler_produto, "Caixa", id)
+                    on_release=partial(self.ler_produto, id)
                 )
                 vendas.add_widget(item)
 
@@ -145,7 +154,7 @@ class BannerProdutos(GridLayout):
                     size_hint=(1, 0.2),
                     pos_hint={"right": 1, "top": 0.2},
                     color=(0, 0, 0, 1),
-                    on_release=partial(self.ler_produto, "Caixa", id)
+                    on_release=partial(self.ler_produto, id)
                 )
                 vendas.add_widget(item)
 
@@ -161,6 +170,6 @@ class BannerProdutos(GridLayout):
                     size_hint=(1, 0.2),
                     pos_hint={"right": 1, "top": 0.2},
                     color=(0, 0, 0, 1),
-                    on_release=partial(self.ler_produto, "Caixa", id)
+                    on_release=partial(self.ler_produto, id)
                 )
                 vendas.add_widget(item)

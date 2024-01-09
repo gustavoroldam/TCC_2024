@@ -1,0 +1,65 @@
+<Email>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "../imagens/desktop/fundo.png"
+                size: self.size
+                pos: self.pos
+
+        ImageButton:
+            source: "../imagens/sairB.png"
+            on_release: app.mudar_tela("homepage")
+            pos_hint: {"right":0.35, "top":1}
+            size_hint: 0.5, 0.10
+
+        LabelButton:
+            canvas.before:
+                Rectangle:
+                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
+                    size: self.size
+                    pos: self.pos
+            on_release: app.Opcoes("edit_func")
+            text: "ENVIAR"
+            pos_hint: {"right":0.75, "top":0.15}
+            size_hint: 0.5, 0.15
+
+        Label:
+            pos_hint: {"right":0.53, "top":0.73}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"TÍTULO DO EMAIL:"
+        TextInput:
+            id: titulo_input
+            hint_text: "título"
+            pos_hint: {"right": 0.9, "top": 0.6}
+            size_hint: 0.8, 0.08
+        Label:
+            pos_hint: {"right":0.48, "top":0.6}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"CORPO DO EMAIL:"
+        TextInput:
+            id: corpo_input
+            hint_text: "corpo"
+            pos_hint: {"right": 0.9, "top": 0.475}
+            size_hint: 0.8, 0.08
+        Label:
+            pos_hint: {"right":0.485, "top":0.47}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"DESCONTO (%):"
+        TextInput:
+            id: desconto_input
+            hint_text: "X"
+            pos_hint: {"right": 0.9, "top": 0.35}
+            size_hint: 0.8, 0.08
+        Label:
+            pos_hint: {"right":0.47, "top":0.34}
+            size_hint: 0.7, 0.2
+            color: 0,0,0,1
+            text:"DATA DE VALIDADE:"
+        TextInput:
+            id: data_input
+            hint_text: "xx/xx/xxxx"
+            pos_hint: {"right": 0.9, "top": 0.225}
+            size_hint: 0.8, 0.08

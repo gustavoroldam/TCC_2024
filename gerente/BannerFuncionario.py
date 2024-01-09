@@ -22,14 +22,29 @@ class BannerFuncionario(GridLayout):
         Dic_Mudanca = {"Nome": f"{login}", "Senha": f"{senha}"}
 
         if cargo != "ADM":
-            requisicao = meu_aplicativo.Requisicao_Patch(
-                f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/{cargo}/{id}', Dic_Mudanca)
+            Dic_Vendedor = meu_aplicativo.Requisicao_Get(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/{cargo}')
+            Pode = True
+            for vendedor in Dic_Vendedor:
+                if Dic_Vendedor[vendedor]["Nome"] == login:
+                    Pode = False
+            if Pode == True:
+                requisicao = meu_aplicativo.Requisicao_Patch(
+                    f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/{cargo}/{id}', Dic_Mudanca)
+                alert('Alteração feita!')
+                meu_aplicativo.Opcoes("gfuncionarios")
+            else:
+                alert('Login Existente!')
         else:
-            requisicao = meu_aplicativo.Requisicao_Patch(
-                f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Usuarios/{id}', Dic_Mudanca)
-
-        alert('Alteração feita!')
-        meu_aplicativo.Opcoes("gfuncionarios")
+            Dic_ADM = meu_aplicativo.Requisicao_Get('https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Usuarios')
+            Pode = True
+            for vendedor in Dic_ADM:
+                if Dic_ADM[vendedor]["Nome"] == login:
+                    Pode = False
+            if Pode == True:
+                requisicao = meu_aplicativo.Requisicao_Patch(
+                    f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Usuarios/{id}', Dic_Mudanca)
+                alert('Alteração feita!')
+                meu_aplicativo.Opcoes("gfuncionarios")
 
     def ler_funcionario(self, cargo, id, *args):
         meu_aplicativo = App.get_running_app()

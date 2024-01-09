@@ -9,6 +9,8 @@
 #:include kv/editarfuncionario.kv
 #:include kv/listarprodutos.kv
 #:include kv/adicionarproduto.kv
+#:include kv/editarproduto.kv
+#:include kv/email.kv
 #:import utils kivy.utils
 
 FloatLayout:
@@ -65,3 +67,11 @@ FloatLayout:
         AdicionarProduto:
             name: "adicionarproduto"
             id: adicionarproduto
+
+        EditarProduto:
+            name: "editarproduto"
+            id: editarproduto
+
+        Email:
+            name: "email"
+            id: email

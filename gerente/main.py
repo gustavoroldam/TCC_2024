@@ -30,6 +30,7 @@ class MainApp(App):
     Cargo_Funcionario = None
     Link_Funcionario = None
     Cargo_Funcionario_Editar = None
+    Link_Produto = None
 
     def build(self):
         self.title = "GERENCIA"
@@ -169,8 +170,10 @@ class MainApp(App):
             self.mudar_tela("adicionarproduto")
         elif funcao == "add_prod_add":
             BannerProdutos.add_produto(self)
-
-
+        elif funcao == "edit_prod":
+            BannerProdutos.editar(self, self.Link_Produto)
+        elif funcao == "cupom":
+            self.mudar_tela("email")
 
     def Motivo(self, nome, extra, *args):
         if nome != "Atualizar":
