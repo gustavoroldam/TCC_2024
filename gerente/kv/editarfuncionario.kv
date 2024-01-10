@@ -12,6 +12,12 @@
             pos_hint: {"right":0.35, "top":1}
             size_hint: 0.5, 0.10
 
+        ImageButton:
+            source: "../imagens/lixeira.png"
+            on_release: app.Opcoes("del_func")
+            pos_hint: {"right":1.08, "top":0.9}
+            size_hint: 0.5, 0.10
+
         LabelButton:
             canvas.before:
                 Rectangle:

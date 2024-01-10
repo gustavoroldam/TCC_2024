@@ -160,6 +160,8 @@ class MainApp(App):
             BannerFuncionario.add_conta(self)
         elif funcao == "edit_func":
             BannerFuncionario.editar(self, self.Link_Funcionario, self.Cargo_Funcionario_Editar)
+        elif funcao == "del_func":
+            BannerFuncionario.deletar(self, self.Link_Funcionario, self.Cargo_Funcionario_Editar)
         elif funcao == "gprodutos":
             BannerProdutos()
             self.mudar_tela("listarprodutos")

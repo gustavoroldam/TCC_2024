@@ -61,7 +61,6 @@ class BannerCupons(GridLayout):
         else:
             alert('Campo TÍTULO DO EMAIL vazio!')
 
-
     def cupom_padrao(self):
         meu_aplicativo = App.get_running_app()
 

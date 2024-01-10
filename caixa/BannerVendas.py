@@ -49,7 +49,7 @@ class BannerVendas(GridLayout):
                     if Dic_Clientes[Cliente]["CPF"] == cpf:
                         Dic_Lista_Cupons = Dic_Clientes[Cliente]["Cupons"]
                         for Cupom in Dic_Lista_Cupons:
-                            if Cupom == cupom:
+                            if Dic_Lista_Cupons[Cupom]["Nome"] == cupom:
                                 requisicao = meu_aplicativo.Requisicao_Delete(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Clientes/{Cliente}/Cupons/{Cupom}')
         else:
             Dic_Venda_Fechada = {"Id": Dic_Venda["Id"], "Produtos": Dic_Venda["Produtos"], "Total": Dic_Venda["Total"],

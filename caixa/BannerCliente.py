@@ -9,6 +9,7 @@ from TCC.vendedor.botoes import LabelButton
 import requests
 import json
 import pyautogui
+from datetime import datetime
 import smtplib
 import email.message
 
@@ -31,9 +32,9 @@ class BannerCliente(GridLayout):
                     if Dic_Clientes[Cliente]["CPF"] == cpf:
                         Dic_Lista_Cupons = Dic_Clientes[Cliente]["Cupons"]
                         for Cupom in Dic_Lista_Cupons:
-                            if Cupom == cupom:
+                            if Dic_Lista_Cupons[Cupom]["Nome"] == cupom and Cupom == "BEMVINDO":
                                 Achei_Cupom = True
-                                meu_aplicativo.Desconto = int(Dic_Lista_Cupons[Cupom])
+                                meu_aplicativo.Desconto = int(Dic_Lista_Cupons[Cupom]["Desconto"])
                                 meu_aplicativo.Cupom_Valido = True
 
                                 tela = meu_aplicativo.root.ids["pagarvenda"]
@@ -45,12 +46,32 @@ class BannerCliente(GridLayout):
 
                                 tela.ids["label_cupom"].text = f"                         DESCONTO DE {meu_aplicativo.Desconto}% APLICADO: R${Total: ,.2f}"
                                 tela.ids["label_cupom"].color = (0, 0, 0, 1)
+                            elif Dic_Lista_Cupons[Cupom]["Nome"] == cupom:
+                                data_atual = datetime.now()
+                                data_validade = datetime.strptime(Dic_Lista_Cupons[Cupom]["Data_Validade"], "%d/%m/%Y")
+                                if data_validade > data_atual:
+                                    Achei_Cupom = True
+                                    meu_aplicativo.Desconto = int(Dic_Lista_Cupons[Cupom]["Desconto"])
+                                    meu_aplicativo.Cupom_Valido = True
+
+                                    tela = meu_aplicativo.root.ids["pagarvenda"]
+
+                                    Total = tela.ids["total_compra"].text
+                                    Total = re.findall(r'\d+|\.', Total)
+                                    Total = ''.join(Total)
+                                    Total = float(Total) - (float(Total) * (float(meu_aplicativo.Desconto) / 100))
+
+                                    tela.ids[
+                                        "label_cupom"].text = f"                         DESCONTO DE {meu_aplicativo.Desconto}% APLICADO: R${Total: ,.2f}"
+                                    tela.ids["label_cupom"].color = (0, 0, 0, 1)
+                                else:
+                                    meu_aplicativo.Requisicao_Delete(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Clientes/{Cliente}/Cupons/{Cupom}')
             except:
                 pass
 
             if Achei_Cupom == False:
                 tela = meu_aplicativo.root.ids["pagarvenda"]
-                tela.ids["label_cupom"].text = "        CUPOM NÃO ENCONTRADO"
+                tela.ids["label_cupom"].text = "        CUPOM NÃO ENCONTRADO OU FORA DA VALIDADE"
                 tela.ids["label_cupom"].color = (1, 0, 0, 1)
 
         else:
@@ -62,32 +83,19 @@ class BannerCliente(GridLayout):
         meu_aplicativo = App.get_running_app()
 
         email_empresa = meu_aplicativo.Requisicao_Get('https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Email')
+        senha_empresa = meu_aplicativo.Requisicao_Get('https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Senha')
+        Dic_Cupom = meu_aplicativo.Requisicao_Get('https://tcc2023-9212b-default-rtdb.firebaseio.com/Cupons/Padrao')
+        titulo = f'{Dic_Cupom["Titulo"]}'
+        corpo = f'{Dic_Cupom["Corpo"]}'
 
 
-        corpo_email = f"""
-        <p>Prezado(a) {Nome},
-
-<p>Seja muito bem-vindo à Autopeças Elite, sua loja preferida para todas as necessidades automotivas! É um prazer tê-lo(a) conosco, e estamos empolgados por você fazer parte da nossa comunidade de apaixonados por carros.</p>
-<br>
-<p>Para expressar nossa gratidão por sua escolha, queremos presenteá-lo(a) com um cupom de desconto exclusivo que poderá ser utilizado em sua próxima compra. Este é o nosso jeito de agradecer por confiar na Autopeças Elite para fornecer os melhores produtos automotivos e serviços.</p>
-<br>
-<p>Cupom de Desconto Exclusivo: <b>BEMVINDO10</b></p>
-<br>
-<p>Ao finalizar sua compra, basta inserir o código acima para aproveitar um desconto especial em sua primeira aquisição conosco. Explore nossa ampla seleção de autopeças de alta qualidade, acessórios e muito mais, tudo a preços irresistíveis.</p>
-<p>Agradecemos por escolher a Autopeças Elite, e estamos ansiosos para acompanhá-lo(a) em sua jornada automotiva.</p>
-<br>
-<p>Seja bem-vindo(a) à elite dos apaixonados por carros!</p>
-<br>
-<p>Atenciosamente,</p>
-<br>
-<p>Equipe Autopeças Elite</p>
-        """
+        corpo_email = f"""{corpo}"""
 
         msg = email.message.Message()
-        msg['Subject'] = "Boas-Vindas à Autopeças Elite! Seu Cupom de Desconto Exclusivo Está Aqui!"
+        msg['Subject'] = f"{titulo}"
         msg['From'] = f'{email_empresa}'
         msg['To'] = f'{Email}'
-        password = 'meustimvlbvhvtrw'
+        password = f'{senha_empresa}'
         msg.add_header('Content-Type', 'text/html')
         msg.set_payload(corpo_email)
 
@@ -129,7 +137,9 @@ class BannerCliente(GridLayout):
         CPF = tela.ids["cpf_input"].text
 
         if meu_aplicativo.Login_Cliente == False:
-            Dic_Login = {'CPF':f'{CPF}', 'Nome':f'{Nome}', 'Email':f'{Email}', 'Cupons':{'BEMVINDO10':'10'}}
+            Dic_Padrao = meu_aplicativo.Requisicao_Get('https://tcc2023-9212b-default-rtdb.firebaseio.com/Cupons/Padrao')
+
+            Dic_Login = {'CPF':f'{CPF}', 'Nome':f'{Nome}', 'Email':f'{Email}', 'Cupons':{'BEMVINDO': {'Nome': f'{Dic_Padrao["Nome"]}', 'Desconto': f'{Dic_Padrao["Desconto"]}'}}}
             meu_aplicativo.Requisicao_Post(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Clientes/', Dic_Login)
             BannerCliente.enviar_email(self, Nome, Email)
 

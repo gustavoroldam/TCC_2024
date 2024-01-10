@@ -11,6 +11,17 @@ import re
 
 class BannerFuncionario(GridLayout):
 
+    def deletar(self, id, cargo):
+        meu_aplicativo = App.get_running_app()
+
+        if cargo != "ADM":
+            requisicao = meu_aplicativo.Requisicao_Delete(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/{cargo}/{id}')
+        else:
+            requisicao = meu_aplicativo.Requisicao_Delete(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Administrador/Usuarios/{id}')
+
+        alert('Exclusão concluida!')
+        meu_aplicativo.Opcoes("gfuncionarios")
+
     def editar(self, id, cargo):
         meu_aplicativo = App.get_running_app()
 
