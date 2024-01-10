@@ -19,6 +19,7 @@ from BannerVendas import BannerVendas
 from BannerEstoque import BannerEstoque
 from BannerFuncionario import BannerFuncionario
 from BannerProdutos import BannerProdutos
+from BannerCupons import BannerCupons
 
 GUI = Builder.load_file("main.kv")
 
@@ -173,7 +174,19 @@ class MainApp(App):
         elif funcao == "edit_prod":
             BannerProdutos.editar(self, self.Link_Produto)
         elif funcao == "cupom":
+            tela = self.root.ids["email"]
+            tela.ids["titulo_input"].text = ''
+            tela.ids["corpo_input"].text = ''
+            tela.ids["cupom_input"].text = ''
+            tela.ids["desconto_input"].text = ''
+            tela.ids["data_input"].text = ''
             self.mudar_tela("email")
+        elif funcao == "enviar_email":
+            BannerCupons()
+        elif funcao == "emailpadrao":
+            BannerCupons.cupom_padrao(self)
+        elif funcao == "salvar_email_padrao":
+            BannerCupons.salvar_cupom_padrao(self)
 
     def Motivo(self, nome, extra, *args):
         if nome != "Atualizar":

@@ -1,4 +1,4 @@
-<Email>:
+<EmailPadrao>:
     FloatLayout:
         canvas:
             Rectangle:
@@ -8,7 +8,7 @@
 
         ImageButton:
             source: "../imagens/sairB.png"
-            on_release: app.mudar_tela("homepage")
+            on_release: app.Opcoes("cupom")
             pos_hint: {"right":0.35, "top":1}
             size_hint: 0.5, 0.10
 
@@ -18,69 +18,48 @@
                     source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
                     size: self.size
                     pos: self.pos
-            on_release: app.Opcoes("emailpadrao")
-            text: "CUPOM DE CADASTRO"
-            pos_hint: {"right":0.98, "top":0.93}
-            size_hint: 0.22, 0.1
-
-        LabelButton:
-            canvas.before:
-                Rectangle:
-                    source: "../imagens/botao.png" if self.state == "normal" else "../imagens/botaoPrecionado.png"
-                    size: self.size
-                    pos: self.pos
-            on_release: app.Opcoes("enviar_email")
-            text: "ENVIAR"
-            pos_hint: {"right":0.75, "top":0.14}
+            on_release: app.Opcoes("salvar_email_padrao")
+            text: "SALVAR"
+            pos_hint: {"right":0.75, "top":0.15}
             size_hint: 0.5, 0.15
 
         Label:
-            pos_hint: {"right":0.53, "top":0.89}
+            pos_hint: {"right":0.53, "top":0.79}
             size_hint: 0.7, 0.2
             color: 0,0,0,1
             text:"TÍTULO DO EMAIL:"
         TextInput:
             id: titulo_input
             hint_text: "título"
-            pos_hint: {"right": 0.9, "top": 0.76}
+            pos_hint: {"right": 0.9, "top": 0.66}
             size_hint: 0.8, 0.08
         Label:
-            pos_hint: {"right":0.53, "top":0.76}
+            pos_hint: {"right":0.53, "top":0.66}
             size_hint: 0.7, 0.2
             color: 0,0,0,1
             text:"CORPO DO EMAIL:"
         TextInput:
             id: corpo_input
             hint_text: "corpo"
-            pos_hint: {"right": 0.9, "top": 0.635}
+            pos_hint: {"right": 0.9, "top": 0.535}
             size_hint: 0.8, 0.13
         Label:
-            pos_hint: {"right":0.53, "top":0.58}
+            pos_hint: {"right":0.53, "top":0.48}
             size_hint: 0.7, 0.2
             color: 0,0,0,1
             text:"NOME DO CUPOM:"
         TextInput:
             id: cupom_input
             hint_text: "NOME"
-            pos_hint: {"right": 0.9, "top": 0.465}
+            pos_hint: {"right": 0.9, "top": 0.365}
             size_hint: 0.8, 0.08
         Label:
-            pos_hint: {"right":0.515, "top":0.46}
+            pos_hint: {"right":0.515, "top":0.36}
             size_hint: 0.7, 0.2
             color: 0,0,0,1
             text:"DESCONTO (%):"
         TextInput:
             id: desconto_input
             hint_text: "X"
-            pos_hint: {"right": 0.9, "top": 0.34}
-            size_hint: 0.8, 0.08
-        Label:
-            pos_hint: {"right":0.535, "top":0.335}
-            size_hint: 0.7, 0.2
-            color: 0,0,0,1
-            text:"DATA DE VALIDADE:"
-        TextInput:
-            id: data_input
-            hint_text: "xx/xx/xxxx"
-            pos_hint: {"right": 0.9, "top": 0.215}
+            pos_hint: {"right": 0.9, "top": 0.24}
             size_hint: 0.8, 0.08

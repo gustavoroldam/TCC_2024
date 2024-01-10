@@ -38,3 +38,6 @@ class EditarProduto(Screen):
 
 class Email(Screen):
     pass
+
+class EmailPadrao(Screen):
+    pass
