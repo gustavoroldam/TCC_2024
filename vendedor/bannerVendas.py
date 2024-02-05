@@ -5,7 +5,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from functools import partial
-from TCC.vendedor.botoes import LabelButton
+from TCC_2023.vendedor.botoes import LabelButton
 import requests
 import json
 
@@ -32,7 +32,7 @@ class BannerVendas(GridLayout):
                 if IdV == int(Id_Venda):
                     Total = float(Dic_Vendas[venda]["Total"])
                     Total = Total - Valor_Produto
-                    Dic_Novo_Total = {"Total":f"{Total}"}
+                    Dic_Novo_Total = {"Total":f"{Total: ,.2f}"}
                     requisicao = requests.patch(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{venda}.json', data=json.dumps(Dic_Novo_Total))
                     Dic_Produtos = Dic_Vendas[venda]["Produtos"]
                     Dic_Produtos_Sem_None = list(filter(None, Dic_Produtos))
@@ -96,8 +96,8 @@ class BannerVendas(GridLayout):
                                     Total = Total + ValorProduto
                                     for i in Dic_Vendas[venda]["Produtos"]:
                                         id += 1
-                                    Dic_Total = {"Total":f"{Total}"}
-                                    Dic_Novo_Produto = {id:{"Produto":f"{NomeProduto}","Quantidade":f"{QtdeVenda}","Valor":f"{ValorProduto}"}}
+                                    Dic_Total = {"Total":f"{Total: ,.2f}"}
+                                    Dic_Novo_Produto = {id:{"Produto":f"{NomeProduto}","Quantidade":f"{QtdeVenda}","Valor":f"{ValorProduto: ,.2f}"}}
 
                                     requisicao = requests.patch(
                                         f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{venda}/.json",
@@ -233,7 +233,7 @@ class BannerVendas(GridLayout):
         pagina.ids["id_Produto"].text = nome
         pagina.ids["id_Quantidade"].text = f"Quantidade: {qtde}"
         pagina.ids["quantidade"].text = f"{qtde}"
-        pagina.ids["id_Valor"].text = f"R$ {valor}"
+        pagina.ids["id_Valor"].text = f"R$ {valor: ,.2f}"
 
         meu_aplicativo.mudar_tela("editarvendafeita")
 
@@ -261,15 +261,15 @@ class BannerVendas(GridLayout):
 
         for id in requisicao_dic:
             if id != 'Proxima_Venda' and requisicao_dic[id]["Id"] == Id_Compra:
-                pagina.ids["total_venda"].text = f"Total: {requisicao_dic[id]['Total']}"
+                pagina.ids["total_venda"].text = f"Total: {requisicao_dic[id]['Total']: ,.2f}"
                 for Produto in requisicao_dic[id]["Produtos"]:
                     try:
                         nome = Produto['Produto']
                         qtde = Produto['Quantidade']
-                        valor = Produto['Valor']
+                        valor = float(Produto['Valor'])
 
                         item = LabelButton(
-                            text=f"Produto: {nome}\n Quantidade: {qtde}\n Valor Total:{valor}",
+                            text=f"Produto: {nome}\n Quantidade: {qtde}\n Valor Total:{valor: ,.2f}",
                             size_hint=(1, 0.2), pos_hint={"right": 1, "top": 0.2},
                             color=(0, 0, 0, 1),
                             on_release=partial(self.selecionar_produto, nome, qtde, valor))
@@ -326,12 +326,12 @@ class BannerVendas(GridLayout):
 
                                 Total -= float(id["Valor"])
                                 Total += Valor
-                                Dic_Total = {'Total':f'{Total}'}
+                                Dic_Total = {'Total':f'{Total: ,.2f}'}
                                 requisicao = requests.patch(
                                     f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{id_venda}/.json",
                                     data=json.dumps(Dic_Total))
                                 pagina_carrinho = meu_aplicativo.root.ids["visualizarvenda"]
-                                pagina_carrinho.ids["total_venda"].text = f"Total: {Total}"
+                                pagina_carrinho.ids["total_venda"].text = f"Total: {Total: ,.2f}"
 
                                 dados = {'Quantidade': Quantidade_Nova, 'Valor': Valor}
                                 requisicao = requests.patch(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{id_venda}/Produtos/{indice}/.json", data=json.dumps(dados))

@@ -8,7 +8,7 @@ from kivy.graphics import Color, Rectangle
 from kivy.app import App
 from functools import partial
 
-from TCC.vendedor.botoes import LabelButton
+from TCC_2023.vendedor.botoes import LabelButton
 
 
 class BannerCarrinho(GridLayout):
@@ -29,11 +29,11 @@ class BannerCarrinho(GridLayout):
                 requisicao = requests.delete(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{id_vendedor}/Lista_Venda/{id}.json")
             else:
                 Total = 0
-                Dic_Total = {"Total": f'{Total}'}
+                Dic_Total = {"Total": f'{Total: ,.2f}'}
                 requisicao = requests.patch(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{id_vendedor}/Lista_Venda/{id_vendedor}/.json",
                         data=json.dumps(Dic_Total))
                 pagina_carrinho = meu_aplicativo.root.ids["carrinho"]
-                pagina_carrinho.ids["total_venda"].text = f"Total: {Total}"
+                pagina_carrinho.ids["total_venda"].text = f"Total: {Total: ,.2f}"
 
     def Deletar_Item(self, id_vendedor):
 
@@ -56,7 +56,7 @@ class BannerCarrinho(GridLayout):
                 if requisicao_dic[id]["Produto"] == Produto:
 
                     Total -= float(requisicao_dic[id]["Valor"])
-                    Dic_Total = {'Total':f'{Total}'}
+                    Dic_Total = {'Total':f'{Total: ,.2f}'}
                     requisicao = requests.patch(
                         f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}/.json",
                         data=json.dumps(Dic_Total))
@@ -68,7 +68,7 @@ class BannerCarrinho(GridLayout):
             f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}.json")
         requisicao_dic = requisicao.json()
         pagina_carrinho = meu_aplicativo.root.ids["carrinho"]
-        pagina_carrinho.ids["total_venda"].text = f"Total: {requisicao_dic['Total']}"
+        pagina_carrinho.ids["total_venda"].text = f"Total: {requisicao_dic['Total']: ,.2f}"
 
     def Salvar_Alteracao(self, id_vendedor):
 
@@ -109,7 +109,7 @@ class BannerCarrinho(GridLayout):
                                     f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}/.json",
                                     data=json.dumps(Dic_Total))
                                 pagina_carrinho = meu_aplicativo.root.ids["carrinho"]
-                                pagina_carrinho.ids["total_venda"].text = f"Total: {Total}"
+                                pagina_carrinho.ids["total_venda"].text = f"Total: {Total: ,.2f}"
 
                                 dados = {'Quantidade': Quantidade, 'Valor': Valor}
                                 requisicao = requests.patch(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{id_vendedor}/Lista_Venda/{id}.json", data=json.dumps(dados))
@@ -216,7 +216,8 @@ class BannerCarrinho(GridLayout):
             requisicao = requests.get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{self.id_vendedor}/Lista_Venda/{self.id_vendedor}.json")
             requisicao_dic = requisicao.json()
             pagina_carrinho = meu_aplicativo.root.ids["carrinho"]
-            pagina_carrinho.ids["total_venda"].text = f"Total: {requisicao_dic['Total']}"
+            Total = float(requisicao_dic['Total'])
+            pagina_carrinho.ids["total_venda"].text = f"Total: {Total: ,.2f}"
         except:
             pass
 

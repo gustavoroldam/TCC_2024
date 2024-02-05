@@ -5,7 +5,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from functools import partial
-from TCC.vendedor.botoes import LabelButton
+from TCC_2023.gerente.botoes import LabelButton
 from pyautogui import alert
 
 class BannerVendas(GridLayout):
@@ -76,7 +76,7 @@ class BannerVendas(GridLayout):
                         vendas.add_widget(item)
 
                         item = LabelButton(
-                            text=f"{Total_Venda}",
+                            text=f"{Total_Venda: ,.2f}",
                             markup=True,
                             halign='center',
                             valign='middle',
@@ -161,7 +161,7 @@ class BannerVendas(GridLayout):
                 vendas.add_widget(item)
 
                 item = LabelButton(
-                    text=f"{Total_Venda}",
+                    text=f"{Total_Venda: ,.2f}",
                     markup=True,
                     halign='center',
                     valign='middle',

@@ -4,7 +4,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from functools import partial
-from TCC.vendedor.botoes import LabelButton
+from TCC_2023.estoque.botoes import LabelButton
 from pyautogui import alert
 
 class BannerProdutoCadastro(GridLayout):

@@ -4,7 +4,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from functools import partial
-from TCC.vendedor.botoes import LabelButton
+from TCC_2023.vendedor.botoes import LabelButton
 import requests
 import json
 
@@ -66,7 +66,7 @@ class BannerProdutos(GridLayout):
                             Nova_Qtde = int(Produto_Dic[id]["Quantidade"]) - int(Quantidade.text)
                             if Nova_Qtde > 0:
                                 Valor = Valor * (float(Quantidade.text))
-                                dados = {'Produto': f'{Produto}', 'Valor': f'{Valor}', 'Quantidade': f'{Quantidade.text}'}
+                                dados = {'Produto': f'{Produto}', 'Valor': f'{Valor: ,.2f}', 'Quantidade': f'{Quantidade.text}'}
                                 requisicao = requests.post(
                                     f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/.json",
                                     data=json.dumps(dados))
@@ -76,7 +76,7 @@ class BannerProdutos(GridLayout):
                                     requisicao_dic = requisicao.json()
 
                                     Valor += float(requisicao_dic["Total"])
-                                    Dic_Total = {'Total': f'{Valor}'}
+                                    Dic_Total = {'Total': f'{Valor: ,.2f}'}
 
                                     requisicao = requests.patch(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}/.json", data=json.dumps(Dic_Total))
                                     if requisicao.ok:
