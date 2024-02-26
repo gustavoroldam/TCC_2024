@@ -218,42 +218,4 @@ class MainApp(App):
             tela.ids["bt-caixa"].color = 1,0,0,1
             self.Cargo_Funcionario = "Caixa"
 
-    # def Devolucao_Selecionar(self, nome, *args):
-    #     meu_aplicativo = App.get_running_app()
-    #     self.Devolucao_Nome = nome
-    #     # pintar de branco todos os outros caras
-    #     pagina_home = meu_aplicativo.root.ids["devolucao"]
-    #     lista_produtos = pagina_home.ids["lista_produtos"]
-    #     for item in list(lista_produtos.children):
-    #         item.color = (0, 0, 0, 1)
-    #         try:
-    #             texto = item.text
-    #             if nome in texto:
-    #                 item.color = (1, 1, 1, 1)
-    #         except:
-    #             pass
-
-    # def ModificarQuantidade(self, fazer, pagina):
-    #
-    #     meu_aplicativo = App.get_running_app()
-    #
-    #     if fazer == 1:
-    #         novo_valor = meu_aplicativo.root.ids[pagina]
-    #         valor = int(novo_valor.ids["quantidade"].text)
-    #         valor = valor + 1
-    #         novo_valor.ids["quantidade"].text = f"{valor}"
-    #     elif fazer == -1:
-    #         novo_valor = meu_aplicativo.root.ids[pagina]
-    #         valor = int(novo_valor.ids["quantidade"].text)
-    #         if valor > 1:
-    #             valor = valor - 1
-    #         novo_valor.ids["quantidade"].text = f"{valor}"
-
-    # def Switch_Lista_E_S(self):
-    #     tela = self.root.ids["entrada"]
-    #     if tela.ids["switch"].active:
-    #         BannerProdutosEntrada.Filtrar(self)
-    #     else:
-    #         BannerProdutosEntrada()
-
 MainApp().run()
