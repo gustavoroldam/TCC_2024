@@ -75,7 +75,12 @@ class BannerProdutos(GridLayout):
                                     requisicao = requests.get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}.json")
                                     requisicao_dic = requisicao.json()
 
-                                    Valor += float(requisicao_dic["Total"])
+                                    try:
+                                        Valor += float(requisicao_dic["Total"])
+                                    except:
+                                        Total = requisicao_dic["Total"].replace(',', '')
+                                        Total = float(Total)
+
                                     Dic_Total = {'Total': f'{Valor: ,.2f}'}
 
                                     requisicao = requests.patch(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}/.json", data=json.dumps(Dic_Total))

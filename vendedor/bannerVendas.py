@@ -91,7 +91,12 @@ class BannerVendas(GridLayout):
                                 if IdV == int(Id_Venda):
                                     id = 0
                                     Dic_Aux = Dic_Vendas[venda]
-                                    Total = float(Dic_Aux["Total"])
+                                    try:
+                                        Total = float(Dic_Aux["Total"])
+                                    except:
+                                        Total = Dic_Aux["Total"].replace(',', '')
+                                        Total = float(Total)
+
                                     ValorProduto = Valor * QtdeVenda
                                     Total = Total + ValorProduto
                                     for i in Dic_Vendas[venda]["Produtos"]:
@@ -261,12 +266,22 @@ class BannerVendas(GridLayout):
 
         for id in requisicao_dic:
             if id != 'Proxima_Venda' and requisicao_dic[id]["Id"] == Id_Compra:
-                pagina.ids["total_venda"].text = f"Total: {requisicao_dic[id]['Total']: ,.2f}"
+                try:
+                    Total = float(requisicao_dic[id]['Total'])
+                except:
+                    Total = requisicao_dic[id]['Total'].replace(',', '')
+                    Total = float(Total)
+
+                pagina.ids["total_venda"].text = f"Total: {Total: ,.2f}"
                 for Produto in requisicao_dic[id]["Produtos"]:
                     try:
                         nome = Produto['Produto']
                         qtde = Produto['Quantidade']
-                        valor = float(Produto['Valor'])
+                        try:
+                            valor = float(Produto['Valor'])
+                        except:
+                            valor = Produto['Valor'].replace(',', '')
+                            valor = float(valor)
 
                         item = LabelButton(
                             text=f"Produto: {nome}\n Quantidade: {qtde}\n Valor Total:{valor: ,.2f}",
@@ -293,8 +308,12 @@ class BannerVendas(GridLayout):
         Quantidade_Antiga = int(Quantidade_Antiga)
 
         Valor = tela_mudanca.ids["id_Valor"].text
-        Valor = re.search(r'\d+', Valor).group()
-        Valor = float(Valor)
+        Valor = Valor.replace("R$ ", "").strip()
+        try:
+            Valor = float(Valor)
+        except:
+            Valor = Valor.replace(",", "")
+            Valor = float(Valor)
 
         requisicao = requests.get('https://tcc2023-9212b-default-rtdb.firebaseio.com/Produtos.json')
         Produto_Dic = requisicao.json()
@@ -323,9 +342,14 @@ class BannerVendas(GridLayout):
                     for id in requisicao_dic:
                         if id != None:
                             if id["Produto"] == Produto:
+                                try:
+                                    Total -= float(id["Valor"])
+                                except:
+                                    Calculo = id["Valor"].replace(',', '')
+                                    Total -= float(Calculo)
 
-                                Total -= float(id["Valor"])
                                 Total += Valor
+
                                 Dic_Total = {'Total':f'{Total: ,.2f}'}
                                 requisicao = requests.patch(
                                     f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{id_venda}/.json",
@@ -372,7 +396,12 @@ class BannerVendas(GridLayout):
             for id in requisicao_dic:
                 if id != 'Proxima_Venda':
                     Id = requisicao_dic[id]['Id']
-                    Total = float(requisicao_dic[id]['Total'])
+                    try:
+                        Total = float(requisicao_dic[id]['Total'])
+                    except:
+                        Total = requisicao_dic[id]['Total'].replace(',', '')
+                        Total = float(Total)
+
                     produtos = requisicao_dic[id].get('Produtos', [])
                     produtos = list(filter(None, produtos))
                     Quantidade_Produto = len(produtos)

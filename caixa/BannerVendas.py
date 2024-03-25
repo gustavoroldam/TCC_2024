@@ -99,7 +99,12 @@ class BannerVendas(GridLayout):
             if venda != 'Proxima_Venda':
                 IdV = int(Dic_Vendas[venda]["Id"])
                 if IdV == int(Id_Venda):
-                    Total = float(Dic_Vendas[venda]["Total"])
+                    try:
+                        Total = float(Dic_Vendas[venda]["Total"])
+                    except:
+                        Total = Dic_Vendas[venda]["Total"].replace(',', '')
+                        Total = float(Total)
+
                     Total = Total - Valor_Produto
                     Dic_Novo_Total = {"Total": f"{Total}"}
                     requisicao = meu_aplicativo.Requisicao_Patch(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{venda}', Dic_Novo_Total)
@@ -155,7 +160,11 @@ class BannerVendas(GridLayout):
 
                     requisicao_dic = meu_aplicativo.Requisicao_Get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{id_venda}")
 
-                    Total = float(requisicao_dic["Total"])
+                    try:
+                        Total = float(requisicao_dic["Total"])
+                    except:
+                        Total = requisicao_dic["Total"].replace(',', '')
+                        Total = float(Total)
 
                     requisicao_dic = meu_aplicativo.Requisicao_Get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{id_venda}/Produtos")
 
@@ -166,7 +175,7 @@ class BannerVendas(GridLayout):
                                 if ID["Produto"] == Produto:
                                     Total -= float(ID["Valor"])
                                     Total += (float(Produto_Dic[id]["Valor"]) * Quantidade_Nova)
-                                    Dic_Total = {'Total': f'{Total}'}
+                                    Dic_Total = {'Total': f'{Total: ,.2f}'}
                                     requisicao = meu_aplicativo.Requisicao_Patch(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{id_venda}/", Dic_Total)
 
                                     dados = {'Quantidade': Quantidade_Nova, 'Valor': (float(Produto_Dic[id]["Valor"]) * Quantidade_Nova)}
@@ -175,7 +184,7 @@ class BannerVendas(GridLayout):
                                 if requisicao_dic[ID]["Produto"] == Produto:
                                     Total -= float(requisicao_dic[ID]["Valor"])
                                     Total += (float(Produto_Dic[id]["Valor"]) * Quantidade_Nova)
-                                    Dic_Total = {'Total': f'{Total}'}
+                                    Dic_Total = {'Total': f'{Total: ,.2f}'}
                                     requisicao = meu_aplicativo.Requisicao_Patch(
                                         f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{id_venda}/",
                                         Dic_Total)
@@ -272,7 +281,12 @@ class BannerVendas(GridLayout):
 
         dic_Venda = meu_aplicativo.Requisicao_Get(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{ID_Link}')
 
-        Total = float(dic_Venda['Total'])
+        try:
+            Total = float(dic_Venda['Total'])
+        except:
+            Total = dic_Venda['Total'].replace(',', '')
+            Total = float(Total)
+
         Taxt_Total = f'TOTAL DA COMPRA: R${Total: ,.2f}'
 
         Text_Id = f'CÓDIGO: [color=ff0000]{Id_Compra}'
@@ -344,12 +358,17 @@ class BannerVendas(GridLayout):
                                 if IdV == int(Id_Venda):
                                     id = 0
                                     Dic_Aux = Dic_Vendas[venda]
-                                    Total = float(Dic_Aux["Total"])
+                                    try:
+                                        Total = float(Dic_Aux["Total"])
+                                    except:
+                                        Total = Dic_Aux["Total"].replace(',', '')
+                                        Total = float(Total)
+
                                     ValorProduto = Valor * QtdeVenda
                                     Total = Total + ValorProduto
                                     for i in Dic_Vendas[venda]["Produtos"]:
                                         id += 1
-                                    Dic_Total = {"Total": f"{Total}"}
+                                    Dic_Total = {"Total": f"{Total: ,.2f}"}
                                     Dic_Novo_Produto = {id: {"Produto": f"{NomeProduto}", "Quantidade": f"{QtdeVenda}",
                                                              "Valor": f"{ValorProduto}"}}
 
@@ -387,7 +406,12 @@ class BannerVendas(GridLayout):
         for id in requisicao_dic:
             if id != 'Proxima_Venda':
                 Id = requisicao_dic[id]['Id']
-                Total = float(requisicao_dic[id]['Total'])
+                try:
+                    Total = float(requisicao_dic[id]['Total'])
+                except:
+                    Total = requisicao_dic[id]['Total'].replace(',', '')
+                    Total = float(Total)
+
                 produtos = requisicao_dic[id].get('Produtos', [])
                 produtos = list(filter(None, produtos))
                 Quantidade_Produto = len(produtos)

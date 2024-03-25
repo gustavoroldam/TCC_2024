@@ -46,7 +46,11 @@ class BannerCarrinho(GridLayout):
             f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}.json")
         requisicao_dic = requisicao.json()
 
-        Total = float(requisicao_dic["Total"])
+        try:
+            Total = float(requisicao_dic['Total'])
+        except:
+            Total = requisicao_dic['Total'].replace(',', '')
+            Total = float(Total)
 
         requisicao = requests.get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{id_vendedor}/Lista_Venda.json")
         requisicao_dic = requisicao.json()
@@ -55,7 +59,11 @@ class BannerCarrinho(GridLayout):
             if id != id_vendedor:
                 if requisicao_dic[id]["Produto"] == Produto:
 
-                    Total -= float(requisicao_dic[id]["Valor"])
+                    try:
+                        Total -= float(requisicao_dic[id]["Valor"])
+                    except:
+                        Calculo = requisicao_dic[id]["Valor"].replace(',', '')
+                        Total -= float(Calculo)
                     Dic_Total = {'Total':f'{Total: ,.2f}'}
                     requisicao = requests.patch(
                         f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}/.json",
@@ -68,7 +76,12 @@ class BannerCarrinho(GridLayout):
             f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}.json")
         requisicao_dic = requisicao.json()
         pagina_carrinho = meu_aplicativo.root.ids["carrinho"]
-        pagina_carrinho.ids["total_venda"].text = f"Total: {requisicao_dic['Total']: ,.2f}"
+        try:
+            Total = float(requisicao_dic['Total'])
+        except:
+            Total = requisicao_dic['Total'].replace(',', '')
+            Total = float(Total)
+        pagina_carrinho.ids["total_venda"].text = f"Total: {Total: ,.2f}"
 
     def Salvar_Alteracao(self, id_vendedor):
 
@@ -93,7 +106,11 @@ class BannerCarrinho(GridLayout):
                     requisicao = requests.get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}.json")
                     requisicao_dic = requisicao.json()
 
-                    Total = float(requisicao_dic["Total"])
+                    try:
+                        Total = float(requisicao_dic['Total'])
+                    except:
+                        Total = requisicao_dic['Total'].replace(',', '')
+                        Total = float(Total)
 
                     requisicao = requests.get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{id_vendedor}/Lista_Venda.json")
                     requisicao_dic = requisicao.json()
@@ -102,9 +119,22 @@ class BannerCarrinho(GridLayout):
                         if id != id_vendedor:
                             if requisicao_dic[id]["Produto"] == Produto:
 
-                                Total -= float(requisicao_dic[id]["Valor"])
-                                Total += float(Valor)
-                                Dic_Total = {'Total':f'{Total}'}
+                                try:
+                                    Total -= float(requisicao_dic[id]["Valor"])
+                                except:
+                                    Calculo = requisicao_dic[id]["Valor"].replace(',', '')
+                                    Total -= float(Calculo)
+
+                                try:
+                                    Total += float(Valor)
+                                except:
+                                    try:
+                                        Calculo = Valor.replace(',', '')
+                                        Total += float(Valor)
+                                    except:
+                                        pass
+
+                                Dic_Total = {'Total':f'{Total: ,.2f}'}
                                 requisicao = requests.patch(
                                     f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}/.json",
                                     data=json.dumps(Dic_Total))
@@ -203,7 +233,11 @@ class BannerCarrinho(GridLayout):
                 if id_Item != self.id_vendedor:
                     Produto_Carrinho = requisicao_dic[id_Item]["Produto"]
                     Quantidade_Carrinho = requisicao_dic[id_Item]["Quantidade"]
-                    Valor_Carrinho = float(requisicao_dic[id_Item]["Valor"])
+                    try:
+                        Valor_Carrinho = float(requisicao_dic[id_Item]["Valor"])
+                    except:
+                        Valor_Carrinho = requisicao_dic[id_Item]["Valor"].replace(',', '')
+                        Valor_Carrinho = float(Valor_Carrinho)
 
                     item = LabelButton(
                         text=f"{Produto_Carrinho} \n Quantidade: {Quantidade_Carrinho} \n R$ {Valor_Carrinho: ,.2f}",
@@ -216,7 +250,12 @@ class BannerCarrinho(GridLayout):
             requisicao = requests.get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{self.id_vendedor}/Lista_Venda/{self.id_vendedor}.json")
             requisicao_dic = requisicao.json()
             pagina_carrinho = meu_aplicativo.root.ids["carrinho"]
-            Total = float(requisicao_dic['Total'])
+            try:
+                Total = float(requisicao_dic['Total'])
+            except:
+                Total = requisicao_dic['Total'].replace(',', '')
+                Total = float(Total)
+
             pagina_carrinho.ids["total_venda"].text = f"Total: {Total: ,.2f}"
         except:
             pass

@@ -18,7 +18,11 @@ class BannerFinalizarVenda(GridLayout):
             f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Funcionarios/Vendedor/{meu_aplicativo.id_vendedor}/Lista_Venda/{meu_aplicativo.id_vendedor}.json")
         requisicao_dic = requisicao.json()
 
-        Total = float(requisicao_dic["Total"])
+        try:
+            Total = float(requisicao_dic['Total'])
+        except:
+            Total = requisicao_dic['Total'].replace(',', '')
+            Total = float(Total)
 
         Produtos = {}
         Quantidade_Total = 0
