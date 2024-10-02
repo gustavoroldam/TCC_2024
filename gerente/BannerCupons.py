@@ -6,7 +6,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from functools import partial
-from TCC_2023.gerente.botoes import LabelButton
+from gerente.botoes import LabelButton
 from pyautogui import alert
 import smtplib
 import email.message

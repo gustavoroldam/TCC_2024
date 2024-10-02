@@ -8,7 +8,7 @@ from kivy.graphics import Color, Rectangle
 from kivy.app import App
 from functools import partial
 
-from TCC_2023.vendedor.botoes import LabelButton
+from vendedor.botoes import LabelButton
 
 
 class BannerCarrinho(GridLayout):

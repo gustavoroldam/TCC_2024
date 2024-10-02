@@ -5,7 +5,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from functools import partial
-from TCC_2023.caixa.botoes import LabelButton
+from caixa.botoes import LabelButton
 import requests
 import json
 import pyautogui

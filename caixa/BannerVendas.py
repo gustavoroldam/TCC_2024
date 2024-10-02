@@ -7,7 +7,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from functools import partial
-from TCC_2023.caixa.botoes import LabelButton
+from caixa.botoes import LabelButton
 import requests
 import json
 
@@ -306,7 +306,11 @@ class BannerVendas(GridLayout):
         for produto in dic_Venda:
             if produto != None:
                 try:
-                    Total = float(dic_Venda[produto]['Valor'])
+                    try:
+                        Total = float(dic_Venda[produto]['Valor'])
+                    except:
+                        Calculo = dic_Venda[produto]['Valor'].replace(',', '')
+                        Total = float(Calculo)
                     item = LabelButton(
                         text=f"{dic_Venda[produto]['Produto']} \nQuantidade: {dic_Venda[produto]['Quantidade']} \nValor: R$ {Total: ,.2f}",
                         size_hint=(1, 0.2),
@@ -316,7 +320,11 @@ class BannerVendas(GridLayout):
                     )
                     vendas.add_widget(item)
                 except:
-                    Total = float(produto['Valor'])
+                    try:
+                        Total = float(produto['Valor'])
+                    except:
+                        Calculo = produto['Valor'].replace(',', '')
+                        Total = float(Calculo)
                     item = LabelButton(
                         text=f"{produto['Produto']} \nQuantidade: {produto['Quantidade']} \nValor: R$ {Total: ,.2f}",
                         size_hint=(1, 0.2),

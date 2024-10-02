@@ -5,7 +5,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from functools import partial
-from TCC_2023.vendedor.botoes import LabelButton
+from vendedor.botoes import LabelButton
 import requests
 import json
 
@@ -30,7 +30,11 @@ class BannerVendas(GridLayout):
             if venda != 'Proxima_Venda':
                 IdV = int(Dic_Vendas[venda]["Id"])
                 if IdV == int(Id_Venda):
-                    Total = float(Dic_Vendas[venda]["Total"])
+                    try:
+                        Total = float(Dic_Vendas[venda]["Total"])
+                    except:
+                        Calculo = Dic_Vendas[venda]["Total"].replace(',', '')
+                        Total = float(Calculo)
                     Total = Total - Valor_Produto
                     Dic_Novo_Total = {"Total":f"{Total: ,.2f}"}
                     requisicao = requests.patch(f'https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{venda}.json', data=json.dumps(Dic_Novo_Total))
@@ -333,7 +337,11 @@ class BannerVendas(GridLayout):
                     requisicao = requests.get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{id_venda}.json")
                     requisicao_dic = requisicao.json()
 
-                    Total = float(requisicao_dic["Total"])
+                    try:
+                        Total = float(requisicao_dic["Total"])
+                    except:
+                        Calculo = requisicao_dic["Total"].replace(',', '')
+                        Total = float(Calculo)
 
                     requisicao = requests.get(f"https://tcc2023-9212b-default-rtdb.firebaseio.com/Vendas/Vendas_Abertas/{id_venda}/Produtos.json")
                     requisicao_dic = requisicao.json()
